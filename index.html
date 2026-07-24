@@ -4,803 +4,496 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sustainable Courses — Texas A&M OSCE</title>
+<link rel="icon" type="image/png" href="logos/tamu-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --maroon: #500000;
-    --green-light: #a6ce3f;
-    --green-mid: #65933f;
-    --green-dark: #4b7538;
+    --maroon:       #500000;
+    --green-light:  #a6ce3f;
+    --green-mid:    #4a7a2e;
+    --green-dark:   #3a6124;
     --green-deeper: #013120;
-    --green-pale: #abcda2;
-    --green-muted: #899b83;
-    --green-faint: #bec8bb;
-    --off-white: #f7f6f2;
-    --white: #ffffff;
-    --text-dark: #1a1a1a;
-    --text-mid: #444;
-    --text-light: #777;
-    --card-border: #e0e5dc;
-    --focused-bg: #eef5e6;
-    --inclusive-bg: #f4f7f0;
-    --non-bg: #f7f6f4;
-    --maroon: #500000;
+    --green-forest: #194007;
+    --green-pale:   #abcda2;
+    --green-faint:  #bec8bb;
+    --green-muted:  #6b7d66;
+    --off-white:    #f7f6f2;
+    --white:        #ffffff;
+    --text-dark:    #1a1a1a;
+    --text-mid:     #3a3a3a;
+    --text-light:   #595959;
+    --card-border:  #d4dcd0;
+    --focused-bg:   #e8f2dc;
+    --inclusive-bg: #f0f5ec;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--off-white);
-    color: var(--text-dark);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); min-height: 100vh; }
 
   /* ── HEADER ── */
-  header {
-    background: var(--green-dark);
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 20px rgba(1,49,32,0.3);
-  }
-  .header-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 18px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo-group {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .logo-mark {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-  .logo-img {
-    height: 42px;
-    width: auto;
-    display: block;
-  }
-  .logo-text {
-    font-family: 'Playfair Display', serif;
-    color: var(--white);
-    font-size: 1.15rem;
-    font-weight: 600;
-    line-height: 1.2;
-  }
-  .logo-sub {
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .header-tag {
-    background: rgba(166,206,63,0.15);
-    border: 1px solid rgba(166,206,63,0.3);
-    color: var(--white);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-weight: 500;
-  }
+  header { background: var(--green-dark); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .logo-group { display: flex; align-items: center; gap: 14px; }
+  .logo-img { height: 42px; width: auto; display: block; }
+  .logo-text-group { display: flex; flex-direction: column; gap: 1px; }
+  .logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
+  .logo-sub { color: var(--white); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; }
+  .header-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: var(--white); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; font-weight: 600; }
 
   /* ── HERO ── */
-  .hero {
-    background: var(--maroon);
-    padding: 72px 32px 56px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 70% 50%, rgba(166,206,63,0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(75,117,56,0.15) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--white);
-    font-weight: 600;
-    margin-bottom: 16px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.1s forwards;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    color: var(--white);
-    font-weight: 700;
-    line-height: 1.15;
-    margin-bottom: 18px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.2s forwards;
-  }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--green-light);
-  }
-  .hero-desc {
-    color: var(--white);
-    font-size: 1.05rem;
-    font-weight: 300;
-    max-width: 560px;
-    margin: 0 auto 36px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.3s forwards;
-  }
-  .hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease 0.4s forwards;
-  }
-  .stat {
-    text-align: center;
-  }
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--green-light);
-    display: block;
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.72rem;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 4px;
-    display: block;
-  }
+  .hero { background: var(--maroon); padding: 64px 32px 52px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(166,206,63,0.07) 0%, transparent 60%); pointer-events: none; }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white); font-weight: 700; margin-bottom: 14px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 4.5vw, 3rem); color: var(--white); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
+  .hero .hero-highlight { color: var(--green-light); font-style: normal; font-weight: 700; }
+  .hero-desc { color: var(--white); font-size: 1rem; font-weight: 300; max-width: 520px; margin: 0 auto 36px; line-height: 1.7; }
+  .hero-desc a { color: inherit; text-decoration: none; font-weight: 700; }
+  .hero-desc a:hover { color: var(--green-light); text-decoration: none; }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; align-items: baseline; }
+  .stat { text-align: center; display: inline-flex; align-items: baseline; gap: 6px; flex-wrap: nowrap; justify-content: center; white-space: nowrap; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--green-light); display: inline-block; line-height: 1; }
+  .stat-label { font-size: 0.68rem; color: var(--white); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0; display: inline-block; white-space: nowrap; }
 
-  /* ── CONTROLS ── */
-  .controls-wrap {
-    background: var(--white);
-    border-bottom: 1px solid var(--card-border);
-    position: sticky;
-    top: 74px;
-    z-index: 90;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  }
-  .controls {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 32px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .search-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 220px;
-  }
-  .search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    font-size: 15px;
-    pointer-events: none;
-  }
-  input[type="search"] {
-    width: 100%;
-    padding: 10px 14px 10px 40px;
-    border: 1.5px solid var(--card-border);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-dark);
-    background: var(--off-white);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  input[type="search"]:focus { border-color: var(--green-mid); }
-
-  select {
-    padding: 10px 14px;
-    border: 1.5px solid var(--card-border);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    color: var(--text-dark);
-    background: var(--off-white);
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s;
-    appearance: none;
-    padding-right: 32px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-  }
-  select:focus { border-color: var(--green-mid); }
-
-  .result-count {
-    font-size: 0.82rem;
-    color: var(--text-light);
-    white-space: nowrap;
-    margin-left: auto;
-  }
+  /* ── LEVEL TABS ── */
+  .tabs-wrap { background: var(--white); border-bottom: 2px solid var(--card-border); }
+  .tabs-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; }
+  .tabs { display: flex; gap: 0; }
+  .tab-btn { padding: 14px 24px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--text-light); background: none; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; transition: all 0.15s; letter-spacing: 0.02em; }
+  .tab-btn:hover { color: var(--green-dark); }
+  .tab-btn.active { color: var(--green-dark); border-bottom-color: var(--green-dark); }
+  .tab-btn:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+  .tabs-wrap .result-count { font-size: 0.8rem; color: var(--text-light); white-space: nowrap; margin-left: auto; }
   .result-count strong { color: var(--green-dark); }
 
+  /* ── CONTROLS ── */
+  .controls-wrap { background: var(--off-white); border-bottom: 1px solid var(--card-border); position: sticky; top: 70px; z-index: 90; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .controls { max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .search-wrap { position: relative; flex: 1 1 280px; min-width: 200px; max-width: 360px; }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 14px; pointer-events: none; }
+  input[type="search"] { width: 100%; padding: 9px 12px 9px 36px; border: 1.5px solid var(--card-border); border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text-dark); background: var(--white); outline: none; transition: border-color 0.15s; }
+  input[type="search"]:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(74,122,46,0.15); }
+  select { padding: 9px 28px 9px 10px; border: 1.5px solid var(--card-border); border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 0.84rem; color: var(--text-dark); background: var(--white); outline: none; cursor: pointer; transition: border-color 0.15s; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23595959' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+  select:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(74,122,46,0.15); }
+  .controls .result-count { font-size: 0.8rem; color: var(--text-light); white-space: nowrap; flex-basis: 100%; text-align: right; }
+  .result-count strong { color: var(--green-dark); }
+
+  /* ── SDG FILTER ── */
+  .sdg-filter-wrap { max-width: 1200px; margin: 0 auto; padding: 14px 32px 4px; }
+  .sdg-filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 8px; font-weight: 700; }
+  .sdg-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sdg-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px 4px 6px; border-radius: 20px; font-size: 0.73rem; font-weight: 700;
+    cursor: pointer; border: 1.5px solid var(--card-border); background: var(--white);
+    color: var(--text-mid); transition: all 0.15s; user-select: none; white-space: nowrap;
+  }
+  .sdg-pill .sdg-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: white; }
+  .sdg-pill.all-pill .sdg-dot { background: var(--green-dark); }
+  .sdg-pill.inactive:hover { border-color: var(--sdg-color, var(--green-mid)); transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .sdg-pill.active { border-color: var(--sdg-color, var(--green-dark)); background: var(--sdg-color, var(--green-dark)); color: white; }
+  .sdg-pill.active .sdg-dot { background: rgba(255,255,255,0.35); }
+  .sdg-pill.active.dark-text { color: var(--text-dark); }
+  .sdg-pill:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+
+  /* ── SDG TOOLTIP ── */
+  .sdg-pill { position: relative; }
+  .sdg-pill::after {
+    content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%) translateY(4px); background: var(--text-dark); color: white;
+    font-size: 0.72rem; font-weight: 600; white-space: nowrap; padding: 5px 10px; border-radius: 6px;
+    opacity: 0; pointer-events: none; transition: opacity 0.12s, transform 0.12s; z-index: 10;
+  }
+  .sdg-pill::before {
+    content: ''; position: absolute; bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%) translateY(4px);
+    border: 5px solid transparent; border-top-color: var(--text-dark);
+    opacity: 0; pointer-events: none; transition: opacity 0.12s, transform 0.12s; z-index: 10;
+  }
+  .sdg-pill:hover::after, .sdg-pill:hover::before,
+  .sdg-pill:focus-visible::after, .sdg-pill:focus-visible::before {
+    opacity: 1; transform: translateX(-50%) translateY(0);
+  }
+
   /* ── LEGEND ── */
-  .legend-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 32px 4px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.82rem;
-    color: var(--text-mid);
-  }
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-  }
+  .legend-wrap { max-width: 1200px; margin: 0 auto; padding: 12px 32px 0; display: flex; gap: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; color: var(--text-mid); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
   .dot-focused { background: var(--green-dark); }
   .dot-inclusive { background: var(--green-pale); border: 1px solid var(--green-muted); }
-  .dot-non { background: var(--green-faint); border: 1px solid #ccc; }
 
-  /* ── SDG PILLS FILTER ── */
-  .sdg-filter-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 12px 32px 16px;
+  /* ── SEMESTER SORT ── */
+  .semester-section { max-width: 1200px; margin: 0 auto; padding: 28px 32px 0; }
+  .semester-heading {
+    font-family: 'DM Sans', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text-dark);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 10px; width: 100%;
+    background: none; border: none; padding: 0; cursor: pointer; text-align: left; line-height: 1;
   }
-  .sdg-filter-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-light);
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-  .sdg-pills {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .sdg-pill {
-    padding: 5px 11px;
-    border-radius: 20px;
-    font-size: 0.76rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1.5px solid transparent;
-    transition: all 0.15s;
-    user-select: none;
-    white-space: nowrap;
-  }
-  .sdg-pill.inactive {
-    background: var(--off-white);
-    border-color: var(--card-border);
-    color: var(--text-mid);
-  }
-  .sdg-pill.active {
-    background: var(--green-dark);
-    border-color: var(--green-dark);
-    color: white;
-  }
-  .sdg-pill.inactive:hover {
-    border-color: var(--green-mid);
-    color: var(--green-dark);
-  }
+  .semester-heading::after { content: ''; flex: 1; height: 1px; background: var(--card-border); align-self: center; }
+  .semester-heading:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 3px; }
+  .semester-caret { display: inline-flex; align-items: center; transition: transform 0.18s; color: var(--green-mid); font-size: 0.8em; flex-shrink: 0; }
+  .semester-section.collapsed .semester-caret { transform: rotate(-90deg); }
+  .semester-section.collapsed .courses-grid { display: none; }
+  .semester-name { font-weight: 700; line-height: 1; }
+  .semester-count { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-light); font-weight: 400; line-height: 1; }
 
   /* ── GRID ── */
-  .grid-wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 8px 32px 64px;
-  }
-  .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 18px;
-  }
+  .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; margin-bottom: 12px; }
 
   /* ── CARD ── */
-  .card {
-    background: var(--white);
-    border: 1.5px solid var(--card-border);
-    border-radius: 12px;
-    padding: 22px 24px;
-    transition: all 0.2s ease;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(12px);
-    animation: cardIn 0.4s ease forwards;
-  }
-  .card { outline: none; }
-  .card:focus { box-shadow: 0 0 0 3px rgba(101,147,63,0.15); }
-  .card.expanded { transform: none; }
-  .card.expanded .course-desc { -webkit-line-clamp: unset; line-clamp: unset; display:block; overflow:visible; }
-  .card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 4px;
-    border-radius: 12px 0 0 12px;
-  }
+  .card { background: var(--white); border: 1.5px solid var(--card-border); border-radius: 10px; padding: 20px 22px; transition: box-shadow 0.18s, transform 0.18s; position: relative; overflow: hidden; cursor: pointer; display: flex; flex-direction: column; min-height: 100%; }
+  .card:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+  .card.expanded .course-desc { -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 10px 0 0 10px; }
   .card.focused::before { background: var(--green-dark); }
   .card.inclusive::before { background: var(--green-pale); }
-  .card.non::before { background: var(--green-faint); }
+  .card:hover { box-shadow: 0 4px 18px rgba(58,97,36,0.13); transform: translateY(-2px); }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .course-code { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--green-mid); }
+  .cross-listed { font-size: 0.65rem; color: var(--text-light); margin-top: 1px; }
+  .classification-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+  .badge-focused { background: var(--focused-bg); color: var(--green-dark); border: 1px solid rgba(58,97,36,0.25); }
+  .badge-inclusive { background: var(--inclusive-bg); color: var(--green-mid); border: 1px solid rgba(74,122,46,0.2); }
+  .course-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; margin-bottom: 8px; }
+  .course-desc { font-size: 0.81rem; color: var(--text-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 14px; }
+  .card-footer { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: auto; width: 100%; }
+  .sdg-tags { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; min-width: 0; }
+  .sdg-tag { font-size: 0.67rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: color-mix(in srgb, var(--sdg-color, var(--green-mid)) 14%, white); color: var(--sdg-color, var(--green-mid)); border: 1px solid color-mix(in srgb, var(--sdg-color, var(--green-mid)) 35%, white); }
+  .no-sdgs { font-size: 0.72rem; color: #aaa; }
+  .syllabus-link { font-size: 0.73rem; color: var(--green-dark); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 3px; border-radius: 4px; padding: 2px 4px; transition: background 0.12s; margin-left: auto; }
+  .syllabus-link:hover { background: var(--focused-bg); }
+  .syllabus-link:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
 
-  .card:hover {
-    border-color: var(--green-mid);
-    box-shadow: 0 4px 20px rgba(75,117,56,0.12);
-    transform: translateY(-2px);
-  }
+  /* ── EMPTY / LOADING ── */
+  .empty { text-align: center; padding: 80px 20px; grid-column: 1/-1; }
+  .empty-icon { font-size: 42px; margin-bottom: 14px; opacity: 0.35; }
+  .empty h3 { font-family: 'Playfair Display', serif; color: var(--text-mid); margin-bottom: 6px; }
+  .empty p { font-size: 0.88rem; color: var(--text-light); }
+  .loading { text-align: center; padding: 60px 20px; color: var(--text-light); font-size: 0.9rem; }
+  .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--card-border); border-top-color: var(--green-dark); border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 12px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .course-code {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--green-mid);
-  }
-  .classification-badge {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 20px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .badge-focused {
-    background: var(--focused-bg);
-    color: var(--green-dark);
-    border: 1px solid rgba(75,117,56,0.2);
-  }
-  .badge-inclusive {
-    background: var(--inclusive-bg);
-    color: #4a7a3a;
-    border: 1px solid rgba(139,179,127,0.3);
-  }
-  .badge-non {
-    background: var(--non-bg);
-    color: #888;
-    border: 1px solid #e0ddd8;
-  }
-
-  .course-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.02rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    line-height: 1.3;
-    margin-bottom: 8px;
-  }
-  .course-desc {
-    font-size: 0.83rem;
-    color: var(--text-light);
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3; /* Add this line */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 14px;
-}
-
-  /* make course-desc readable when expanded */
-  .card .course-desc { max-height: 4.8em; }
-  .card.expanded .course-desc { max-height: none; }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .sdg-tags {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-  }
-  .sdg-tag {
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
-    background: rgba(101,147,63,0.1);
-    color: var(--green-mid);
-    border: 1px solid rgba(101,147,63,0.2);
-  }
-  .syllabus-link {
-    font-size: 0.75rem;
-    color: var(--green-dark);
-    text-decoration: none;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: color 0.15s;
-  }
-  .syllabus-link:hover { color: var(--white); }
-
-  /* ── EMPTY STATE ── */
-  .empty {
-    text-align: center;
-    padding: 80px 20px;
-    grid-column: 1/-1;
-  }
-  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
-  .empty h3 {
-    font-family: 'Playfair Display', serif;
-    color: var(--text-mid);
-    margin-bottom: 8px;
-  }
-  .empty p { font-size: 0.9rem; color: var(--text-light); }
+  /* ── NO-DATA SECTION (hidden when data exists) ── */
+  .no-semester { text-align: center; padding: 48px 20px; color: var(--text-light); font-size: 0.88rem; }
 
   /* ── FOOTER ── */
-  footer {
-    background: var(--green-dark);
-    color: var(--off-white);
-    text-align: center;
-    padding: 28px 32px;
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-  }
+  footer { background: var(--green-dark); color: var(--white); text-align: center; padding: 24px 32px; font-size: 0.75rem; letter-spacing: 0.03em; margin-top: 40px; }
   footer a { color: var(--white); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  /* ── SKIP LINK ── */
+  .skip-link { position: absolute; top: -40px; left: 16px; background: var(--green-dark); color: white; padding: 8px 14px; border-radius: 0 0 6px 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; z-index: 9999; transition: top 0.15s; }
+  .skip-link:focus { top: 0; }
 
-  /* ── DEMO BANNER ── */
-  .demo-banner {
-    background: linear-gradient(90deg, var(--maroon), #7a0000);
-    color: white;
-    text-align: center;
-    padding: 10px 20px;
-    font-size: 0.78rem;
-    letter-spacing: 0.05em;
-    font-weight: 500;
-  }
-  .demo-banner em { font-style: normal; color: #ffb3b3; }
+  /* ── DISCLAIMER BANNER ── */
+  .disclaimer-banner { background: var(--green-forest); color: var(--white); text-align: center; padding: 9px 20px; font-size: 0.76rem; font-weight: 400; line-height: 1.5; }
 
-  @media (max-width: 640px) {
-    .controls { flex-direction: column; }
+  /* ── RECLASSIFICATION TAB ── */
+  .reclass-wrap { max-width: 800px; margin: 0 auto; padding: 48px 32px; text-align: center; }
+  .reclass-wrap h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 12px; }
+  .reclass-wrap p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+  .reclass-wrap iframe { width: 100%; height: 900px; border: 1.5px solid var(--card-border); border-radius: 10px; background: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls .result-count { text-align: right; }
+    .tabs-inner { flex-direction: column; align-items: flex-start; padding: 0; }
+    .tabs { padding: 0 16px; width: 100%; border-bottom: 1px solid var(--card-border); }
+    .tabs-wrap .result-count { padding: 12px 16px; text-align: right; width: 100%; margin-left: 0; }
     .hero-stats { gap: 24px; }
     .courses-grid { grid-template-columns: 1fr; }
-    .header-inner { padding: 14px 18px; }
-    .grid-wrap, .legend-wrap, .sdg-filter-wrap { padding-left: 18px; padding-right: 18px; }
-    .controls { padding: 12px 18px; }
+    .header-inner, .controls, .legend-wrap, .sdg-filter-wrap, .semester-section { padding-left: 16px; padding-right: 16px; }
     .logo-img { height: 34px; }
   }
+
 </style>
 </head>
 <body>
 
-<div class="demo-banner">
-  ⚡ <em>Demo prototype</em> — OSCE Sustainable Course Guide &nbsp;·&nbsp; AREN Department Sample Data
-</div>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<div class="disclaimer-banner">Course classifications are based on a review of available syllabi and may not reflect the most current course content. Course availability varies by semester and department offerings are subject to change without notice.</div>
 
 <header>
   <div class="header-inner">
-    <div class="logo-group">
-      <img class="logo-img" src="logos/White Graphic Stacked.png" alt="Texas A&M Office of Sustainability & Campus Enrichment logo">
-      <div>
+    <a href="https://sustainability.tamu.edu/" target="_blank" rel="noopener noreferrer" class="logo-group" aria-label="Office of Sustainability and Campus Enrichment home page" style="text-decoration:none;">
+      <img class="logo-img" src="logos/White Graphic Stacked.png" alt="Texas A&M University Office of Sustainability and Campus Enrichment logo">
+      <div class="logo-text-group">
         <div class="logo-text">Sustainable Courses</div>
-        <div class="logo-sub">Texas A&M · OSCE</div>
+        <div class="logo-sub">Texas A&amp;M · OSCE</div>
       </div>
-    </div>
-    <div class="header-tag">STARS Classified</div>
+    </a>
+    <a href="https://stars.aashe.org/" target="_blank" rel="noopener noreferrer" class="header-tag" aria-label="Learn more about AASHE STARS" style="text-decoration:none;">STARS Classified</a>
   </div>
 </header>
 
-<section class="hero">
-  <div class="hero-eyebrow">Office of Sustainability & Campus Enrichment</div>
-  <h1>Find Your <em>Sustainable</em> Course</h1>
-  <p class="hero-desc">Explore Texas A&M courses classified by their sustainability content — from focused programs to inclusive offerings — aligned to the UN Sustainable Development Goals.</p>
-  <div class="hero-stats">
-    <div class="stat">
-      <span class="stat-num" id="stat-total">0</span>
-      <span class="stat-label">Courses Listed</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num" id="stat-focused">0</span>
-      <span class="stat-label">Focused</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num" id="stat-inclusive">0</span>
-      <span class="stat-label">Inclusive</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num" id="stat-sdgs">17</span>
-      <span class="stat-label">SDGs Covered</span>
-    </div>
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-eyebrow">Office of Sustainability &amp; Campus Enrichment</div>
+  <h1 id="hero-heading">Find Your <span class="hero-highlight">Sustainable</span> Course</h1>
+  <p class="hero-desc">Explore Texas A&amp;M courses classified by their sustainability content, aligned to the <a href="https://sdgs.un.org/goals" target="_blank" rel="noopener noreferrer">UN Sustainable Development Goals</a>.</p>
+  <div class="hero-stats" aria-label="Course statistics">
+    <div class="stat"><span class="stat-num" id="stat-total" aria-live="polite">—</span><span class="stat-label">Courses Listed</span></div>
+    <div class="stat"><span class="stat-num" id="stat-focused" aria-live="polite">—</span><span class="stat-label">Focused</span></div>
+    <div class="stat"><span class="stat-num" id="stat-inclusive" aria-live="polite">—</span><span class="stat-label">Inclusive</span></div>
+    <div class="stat"><span class="stat-num" id="stat-semesters" aria-live="polite">—</span><span class="stat-label">Semesters</span></div>
   </div>
 </section>
 
-<div class="controls-wrap">
-  <div class="controls">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="search" id="search" placeholder="Search courses, topics, keywords…">
+<div class="tabs-wrap" role="tablist" aria-label="Course level">
+  <div class="tabs-inner">
+    <div class="tabs">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-panel" data-level="Undergraduate" id="tab-ug">Undergraduate</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel" data-level="Graduate" id="tab-grad">Graduate</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="reclass-view" data-level="__reclass" id="tab-reclass">New Course or Reclassification?</button>
     </div>
-    <select id="filter-class">
-      <option value="">All Classifications</option>
-      <option value="focused">Sustainability Focused</option>
-      <option value="inclusive">Sustainability Inclusive</option>
-      <option value="non">Non-Sustainable</option>
-    </select>
-    <select id="filter-dept">
-      <option value="">All Departments</option>
-    </select>
-    <select id="sort">
-      <option value="code">Sort: Course Code</option>
-      <option value="name">Sort: Name A–Z</option>
-      <option value="classification">Sort: Classification</option>
-    </select>
-    <div class="result-count"><strong id="count">0</strong> courses</div>
+    <div class="result-count" aria-live="polite" aria-atomic="true"><strong id="count">0</strong> courses</div>
   </div>
 </div>
 
-<div class="legend-wrap">
-  <div class="legend-item"><div class="legend-dot dot-focused"></div> Sustainability Focused: sustainability is central</div>
-  <div class="legend-item"><div class="legend-dot dot-inclusive"></div> Sustainability Inclusive: sustainability addressed, not central</div>
-  <div class="legend-item"><div class="legend-dot dot-non"></div> Non-Sustainable: no significant sustainability content</div>
-</div>
+<main id="main-content">
+  <div id="loading-state" class="loading" aria-live="polite">
+    <div class="spinner" role="status" aria-hidden="true"></div>
+    <div>Loading course data…</div>
+  </div>
 
-<div class="sdg-filter-wrap">
-  <div class="sdg-filter-label">Filter by SDG</div>
-  <div class="sdg-pills" id="sdg-pills"></div>
-</div>
+  <div id="app-content" hidden>
+    <div id="courses-view">
+      <div class="controls-wrap" role="search">
+        <div class="controls">
+          <div class="search-wrap">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="search" placeholder="Search courses, topics, keywords…" aria-label="Search courses">
+          </div>
+          <select id="filter-class" aria-label="Filter by classification">
+            <option value="">All Classifications</option>
+            <option value="Focused">Sustainability Focused</option>
+            <option value="Inclusive">Sustainability Inclusive</option>
+          </select>
+          <select id="filter-dept" aria-label="Filter by department">
+            <option value="">All Departments</option>
+          </select>
+          <select id="filter-semester" aria-label="Filter by semester">
+            <option value="">All Semesters</option>
+          </select>
+          <select id="sort" aria-label="Sort courses">
+            <option value="code">Sort: Course Code</option>
+            <option value="name">Sort: Name A–Z</option>
+            <option value="classification">Sort: Classification</option>
+          </select>
+        </div>
+      </div>
 
-<div class="grid-wrap">
-  <div class="courses-grid" id="grid"></div>
-</div>
+      <div class="sdg-filter-wrap" aria-label="Filter by Sustainable Development Goal">
+        <div class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal</div>
+        <div class="sdg-pills" id="sdg-pills" role="group" aria-labelledby="sdg-label"></div>
+      </div>
+
+      <div class="legend-wrap" aria-label="Classification legend">
+        <div class="legend-item"><div class="legend-dot dot-focused" aria-hidden="true"></div> <span>Sustainability Focused — Sustainability is central</span></div>
+        <div class="legend-item"><div class="legend-dot dot-inclusive" aria-hidden="true"></div> <span>Sustainability Inclusive — Sustainability addressed, not central</span></div>
+      </div>
+
+      <div id="tab-panel" role="tabpanel" aria-labelledby="tab-ug">
+        <div id="results-container"></div>
+      </div>
+    </div>
+
+    <div id="reclass-view" role="tabpanel" aria-labelledby="tab-reclass" hidden>
+      <div class="reclass-wrap">
+        <h2>New Course or Reclassification?</h2>
+        <p>Help us keep our sustainability course inventory accurate and up-to-date. Use this form to suggest a new sustainability-focused course for our database, or to request a change to an existing course's classification or UN Sustainable Development Goal (SDG) alignment.</p>
+        <!-- TODO: replace PLACEHOLDER_FORM_ID with the real Google Form's embed URL -->
+        <iframe src="https://docs.google.com/forms/d/17uc8cDgsxcwoAQ9OKQ1I13oxBvvxlja-WmNVmUuiZNU/viewform?embedded=true" title="Course Reclassification Suggestion Form">Loading form…</iframe>
+      </div>
+    </div>
+  </div>
+</main>
 
 <footer>
-  <p>Texas A&M University · Office of Sustainability &amp; Campus Enrichment · <a href="https://sustainability.tamu.edu">sustainability.tamu.edu</a></p>
-  <p style="margin-top:6px;opacity:0.6;">Classifications based on AASHE STARS criteria · SDG alignment per UN Sustainable Development Goals</p>
+  <p>Texas A&amp;M University · <a href="https://sustainability.tamu.edu">Office of Sustainability &amp; Campus Enrichment</a></p>
+  <p style="margin-top:5px;opacity:0.65;">Classifications based on <a href="https://stars.aashe.org">AASHE STARS</a> criteria · SDG alignment per UN Sustainable Development Goals</p>
 </footer>
 
 <script>
-const SDG_LABELS = {
-  1:'No Poverty',2:'Zero Hunger',3:'Good Health',4:'Quality Education',
-  5:'Gender Equality',6:'Clean Water',7:'Clean Energy',8:'Decent Work',
-  9:'Industry & Innovation',10:'Reduced Inequalities',11:'Sustainable Cities',
-  12:'Responsible Consumption',13:'Climate Action',14:'Life Below Water',
-  15:'Life on Land',16:'Peace & Justice',17:'Partnerships'
-};
-
-const COURSES = [
-  {
-    code:'AREN 200', name:'Architectural Engineering Foundations', dept:'AREN',
-    college:'Engineering', classification:'focused',
-    sdgs:[11,9],
-    desc:'Introduction to architectural engineering systems and professional practice; emphasis on building envelope, structural, mechanical, and lighting systems; sustainability as it relates to building system design.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 210', name:'Fundamentals of Building Information Modeling', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Application of engineering design, document production, and interdisciplinary coordination using 3D parametric modeling software for structural and MEP systems.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 221', name:'Engineering Mechanics — Statics & Dynamics', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Principles of statics, kinematics, and kinetics with attention to architectural engineering applications; force systems, equilibrium, trusses, frames, and energy methods.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 281', name:'Architectural Engineering Seminar', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[9],
-    desc:'Exploration of architectural engineering subfields, curriculum resources, internship opportunities, and current professional challenges including ethical implications.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 285', name:'Directed Studies', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Directed studies within the field of architectural engineering. Topics vary by instructor and semester.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 289', name:'Special Topics', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Selected topics in an identified area of architectural engineering. May be repeated for credit.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 300', name:'Architectural Engineering Systems', dept:'AREN',
-    college:'Engineering', classification:'focused',
-    sdgs:[7,9,11,13],
-    desc:'Comprehensive knowledge of building systems covering structural, HVAC, electrical, and fire safety engineering; sustainability aspects including net zero energy, water, waste, and carbon.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 310', name:'Thermal-Fluid Sciences I', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[7],
-    desc:'Fundamental theory and practical application of thermal-fluid sciences; thermodynamics, psychrometric analysis, refrigeration cycles, and fluid behavior for architectural engineering.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 311', name:'Thermal-Fluid Sciences II', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[7],
-    desc:'Continued thermal-fluid theory; heat exchangers, open channel flow, conduction, convection, radiation, and introduction to computational fluid dynamics for building applications.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 320', name:'Lighting Engineering for Buildings', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[7,11],
-    desc:'Design and analysis of electrical lighting systems; integration between lighting design process and technical foundations; lighting calculations, power budgets, and human comfort.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 330', name:'Mechanical Systems for Buildings', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[3,11],
-    desc:'Qualitative and quantitative study of HVAC systems; thermal behavior of buildings, human comfort, psychometrics, indoor air quality, and fire suppression systems.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 399', name:'High Impact Experience', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Participation in an approved high-impact learning experience; reflection on professional outcomes from the NSPE Engineering Body of Knowledge.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 401', name:'Architectural Engineering Design I', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[9,11],
-    desc:'Instruction and practice in the engineering design process applied to a major architectural engineering project; requirements, alternative concepts, trade-off studies, and embodiment design.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 402', name:'Architectural Engineering Design II', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Extension of engineering design fundamentals; project management, intellectual property, product liability, ethical responsibility, and major design project development.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 416', name:'Smart Building Technology', dept:'AREN',
-    college:'Engineering', classification:'focused',
-    sdgs:[7,9,11,13],
-    desc:'Fundamentals of smart building design, control, and integration; building energy modeling, IoT sensors, building automation systems, and grid-interactive efficient buildings (GEB).',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 430', name:'Hygrothermal Analysis of Building Envelopes', dept:'AREN',
-    college:'Engineering', classification:'inclusive',
-    sdgs:[7,11],
-    desc:'Heat and mass transfer on and through building envelopes; solar loads, internal heat gains, and estimation of space cooling and heating loads.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 440', name:'HVAC Design', dept:'AREN',
-    college:'Engineering', classification:'focused',
-    sdgs:[7,11,13],
-    desc:'Project-based design of mechanical systems from programming through working documents; HVAC schematic design, system selection, energy analysis, and environmental and human comfort considerations.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 485', name:'Directed Studies (Upper)', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Directed individual study within architectural engineering at the junior/senior level. Topics vary.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 489', name:'Special Topics (Upper)', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Selected advanced topics in an identified area of architectural engineering. May be repeated for credit.',
-    syllabus:'#'
-  },
-  {
-    code:'AREN 491', name:'Research', dept:'AREN',
-    college:'Engineering', classification:'non',
-    sdgs:[],
-    desc:'Faculty-directed research in architectural engineering. May be repeated for credit.',
-    syllabus:'#'
-  }
+// ── CONFIG ──
+// The site loads data/manifest.json to find semester CSVs — that file is
+// regenerated automatically by .github/workflows/build-data.yml whenever an
+// XLSX is added to data/. DATA_FILES below is only a fallback for when the
+// manifest can't be fetched (e.g. opening index.html directly via file://).
+const DATA_FILES = [
+  'data/Spring 2026.csv',
 ];
 
-// ── STATE ──
-let activeSdgs = new Set();
-let filtered = [...COURSES];
+const SDG_LABELS = {
+  1:'No Poverty', 2:'Zero Hunger', 3:'Good Health & Well-Being',
+  4:'Quality Education', 5:'Gender Equality', 6:'Clean Water & Sanitation',
+  7:'Affordable & Clean Energy', 8:'Decent Work & Economic Growth',
+  9:'Industry, Innovation & Infrastructure', 10:'Reduced Inequalities',
+  11:'Sustainable Cities & Communities', 12:'Responsible Consumption & Production',
+  13:'Climate Action', 14:'Life Below Water', 15:'Life on Land',
+  16:'Peace, Justice & Strong Institutions', 17:'Partnerships for the Goals'
+};
 
-// ── STATS ──
-function updateStats() {
-  const sus = COURSES.filter(c => c.classification !== 'non');
-  document.getElementById('stat-total').textContent = COURSES.length;
-  document.getElementById('stat-focused').textContent = COURSES.filter(c=>c.classification==='focused').length;
-  document.getElementById('stat-inclusive').textContent = COURSES.filter(c=>c.classification==='inclusive').length;
-  const allSdgs = new Set(COURSES.flatMap(c=>c.sdgs));
-  document.getElementById('stat-sdgs').textContent = allSdgs.size;
+// Official UN SDG colors — used for pills, tags, and card accents.
+const SDG_COLORS = {
+  1:'#E5243B', 2:'#DDA63A', 3:'#4C9F38', 4:'#C5192D', 5:'#FF3A21',
+  6:'#26BDE2', 7:'#FCC30B', 8:'#A21942', 9:'#FD6925', 10:'#DD1367',
+  11:'#FD9D24', 12:'#BF8B2E', 13:'#3F7E44', 14:'#0A97D9', 15:'#56C02B',
+  16:'#00689D', 17:'#19486A'
+};
+// Goals with pale/yellow backgrounds need dark text for contrast when filled.
+const SDG_DARK_TEXT = new Set([7, 11, 12]);
+
+// ── SEMESTER SORT ORDER ──
+const SEASON_ORDER = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
+function semesterSortKey(sem) {
+  const [season, year] = sem.split(' ');
+  return parseInt(year) * 10 + (SEASON_ORDER[season] || 0);
+}
+
+// ── CSV PARSER (handles quoted fields with commas, "" escapes, and embedded newlines) ──
+function parseCSV(text) {
+  const records = parseCSVRecords(text);
+  const rows = [];
+  let headers = null;
+  for (const record of records) {
+    if (record.every(c => !c.trim())) continue;
+    if (!headers) { headers = record.map(h => h.trim()); continue; }
+    const obj = {};
+    headers.forEach((h, j) => obj[h] = (record[j] || '').trim());
+    if (obj.course_title) rows.push(obj);
+  }
+  return rows;
+}
+
+// Scans the whole file as one character stream so quoted fields may contain
+// commas, "" escapes, and literal newlines without breaking row boundaries.
+function parseCSVRecords(text) {
+  const records = [];
+  let record = [], field = '', inQuotes = false, i = 0;
+  const n = text.length;
+  while (i < n) {
+    const ch = text[i];
+    if (inQuotes) {
+      if (ch === '"') {
+        if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+        inQuotes = false; i++; continue;
+      }
+      field += ch; i++; continue;
+    }
+    if (ch === '"') { inQuotes = true; i++; continue; }
+    if (ch === ',') { record.push(field); field = ''; i++; continue; }
+    if (ch === '\r') { i++; continue; }
+    if (ch === '\n') { record.push(field); records.push(record); record = []; field = ''; i++; continue; }
+    field += ch; i++;
+  }
+  if (field !== '' || record.length) { record.push(field); records.push(record); }
+  return records;
+}
+
+// ── STATE ──
+let allCourses = [];
+let activeSdgs = new Set();
+let activeLevel = 'Undergraduate';
+
+function getCourseIdentity(c) {
+  return [
+    (c.level || '').trim().toLowerCase(),
+    (c.semester || '').trim().toLowerCase(),
+    String(c.course_number || '').trim(),
+    (c.course_title || '').trim().toLowerCase(),
+    (c.description || '').trim().toLowerCase(),
+    (c.classification || '').trim().toLowerCase()
+  ].join('|');
+}
+
+function getCourseSyllabusUrl(c, courses = allCourses) {
+  const direct = (c.syllabus_url || '').trim();
+  if (direct) return direct;
+
+  const identity = getCourseIdentity(c);
+  const match = courses.find(other =>
+    other !== c &&
+    getCourseIdentity(other) === identity &&
+    (other.syllabus_url || '').trim()
+  );
+
+  return match ? match.syllabus_url : '';
+}
+
+// ── LOAD DATA ──
+async function getDataFiles() {
+  try {
+    const r = await fetch('data/manifest.json');
+    if (r.ok) {
+      const manifest = await r.json();
+      if (Array.isArray(manifest) && manifest.length) return manifest;
+    }
+  } catch (e) { /* fall through to hardcoded list */ }
+  return DATA_FILES;
+}
+
+async function loadAll() {
+  const files = await getDataFiles();
+  const promises = files.map(f =>
+    fetch(f).then(r => r.ok ? r.text() : Promise.reject(f)).then(parseCSV).catch(() => [])
+  );
+  const results = await Promise.all(promises);
+  allCourses = results.flat().filter(c => (c.semester || '').trim());
+  allCourses = allCourses.map(c => ({
+    ...c,
+    syllabus_url: getCourseSyllabusUrl(c, allCourses)
+  }));
+  if (allCourses.length === 0) {
+    document.getElementById('loading-state').innerHTML = '<p style="color:var(--text-light);padding:40px">No course data found. Make sure CSV files are in the <code>data/</code> folder.</p>';
+    return;
+  }
+  document.getElementById('loading-state').hidden = true;
+  document.getElementById('app-content').hidden = false;
+  buildFilters();
+  buildSdgPills();
+  updateStats();
+  render();
+}
+
+// ── BUILD FILTERS ──
+function buildFilters() {
+  const depts = [...new Set(allCourses.map(c => c.department))].sort();
+  const deptSel = document.getElementById('filter-dept');
+  depts.forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; deptSel.appendChild(o); });
+
+  const semesters = [...new Set(allCourses.map(c => c.semester))]
+    .sort((a,b) => semesterSortKey(b) - semesterSortKey(a));
+  const semSel = document.getElementById('filter-semester');
+  semesters.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; semSel.appendChild(o); });
 }
 
 // ── SDG PILLS ──
 function buildSdgPills() {
-  const used = new Set(COURSES.flatMap(c=>c.sdgs));
+  const usedSdgs = new Set(allCourses.flatMap(c => c.sdgs ? c.sdgs.split(',').map(Number).filter(Boolean) : []));
   const wrap = document.getElementById('sdg-pills');
-  // All SDGs button
-  const all = document.createElement('span');
-  all.className = 'sdg-pill active';
-  all.textContent = 'All SDGs';
-  all.dataset.sdg = '0';
-  all.addEventListener('click', () => {
-    activeSdgs.clear();
-    render();
-    updatePillStates();
-  });
-  wrap.appendChild(all);
 
-  [...used].sort((a,b)=>a-b).forEach(sdg => {
-    const pill = document.createElement('span');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'sdg-pill all-pill active';
+  allBtn.innerHTML = `<span class="sdg-dot" aria-hidden="true">★</span>All SDGs`;
+  allBtn.setAttribute('aria-pressed', 'true');
+  allBtn.setAttribute('data-tooltip', 'Show every SDG');
+  allBtn.dataset.sdg = '0';
+  allBtn.addEventListener('click', () => { activeSdgs.clear(); updatePillStates(); render(); });
+  wrap.appendChild(allBtn);
+
+  [...usedSdgs].sort((a,b)=>a-b).forEach(sdg => {
+    const color = SDG_COLORS[sdg] || 'var(--green-dark)';
+    const pill = document.createElement('button');
     pill.className = 'sdg-pill inactive';
-    pill.textContent = `SDG ${sdg}: ${SDG_LABELS[sdg]}`;
+    pill.style.setProperty('--sdg-color', color);
+    pill.innerHTML = `<span class="sdg-dot" aria-hidden="true" style="background:${color}">${sdg}</span>SDG ${sdg}`;
+    pill.setAttribute('data-tooltip', SDG_LABELS[sdg]);
+    pill.setAttribute('aria-label', `SDG ${sdg}: ${SDG_LABELS[sdg]}`);
+    pill.setAttribute('aria-pressed', 'false');
     pill.dataset.sdg = sdg;
     pill.addEventListener('click', () => {
-      if (activeSdgs.has(sdg)) activeSdgs.delete(sdg);
-      else activeSdgs.add(sdg);
-      render();
-      updatePillStates();
+      if (activeSdgs.has(sdg)) activeSdgs.delete(sdg); else activeSdgs.add(sdg);
+      updatePillStates(); render();
     });
     wrap.appendChild(pill);
   });
@@ -809,136 +502,246 @@ function buildSdgPills() {
 function updatePillStates() {
   document.querySelectorAll('.sdg-pill').forEach(p => {
     const sdg = parseInt(p.dataset.sdg);
-    if (sdg === 0) {
-      p.className = 'sdg-pill ' + (activeSdgs.size === 0 ? 'active' : 'inactive');
-    } else {
-      p.className = 'sdg-pill ' + (activeSdgs.has(sdg) ? 'active' : 'inactive');
-    }
+    const isActive = sdg === 0 ? activeSdgs.size === 0 : activeSdgs.has(sdg);
+    const isAll = sdg === 0;
+    p.classList.toggle('active', isActive);
+    p.classList.toggle('inactive', !isActive);
+    p.classList.toggle('dark-text', !isAll && isActive && SDG_DARK_TEXT.has(sdg));
+    p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
 }
 
-// ── DEPT FILTER ──
-function buildDeptFilter() {
-  const depts = [...new Set(COURSES.map(c=>c.dept))].sort();
-  const sel = document.getElementById('filter-dept');
-  depts.forEach(d => {
-    const o = document.createElement('option');
-    o.value = d; o.textContent = d;
-    sel.appendChild(o);
-  });
+// ── STATS ──
+function updateStats() {
+  const sus = allCourses.filter(c => c.level === 'Undergraduate'); // default view
+  document.getElementById('stat-total').textContent = allCourses.length;
+  document.getElementById('stat-focused').textContent = allCourses.filter(c=>c.classification==='Focused').length;
+  document.getElementById('stat-inclusive').textContent = allCourses.filter(c=>c.classification==='Inclusive').length;
+  const sems = new Set(allCourses.map(c=>c.semester));
+  document.getElementById('stat-semesters').textContent = sems.size;
+}
+
+function buildSearchText(c) {
+  const code = `${c.department || ''} ${c.course_number || ''}`.trim();
+  const fields = [
+    c.course_title || '',
+    c.department || '',
+    c.course_number || '',
+    code,
+    code.replace(/\s+/g, ''),
+    c.description || '',
+    c.all_departments || '',
+    (c.sdgs || '').split(',').map(s => SDG_LABELS[parseInt(s)] || '').join(' ')
+  ];
+  return fields.join(' ').toLowerCase();
+}
+
+function matchesSearch(c, search) {
+  const normalized = search.trim().toLowerCase();
+  if (!normalized) return true;
+
+  const terms = normalized.split(/\s+/).filter(Boolean);
+  const haystack = buildSearchText(c);
+
+  if (terms.length === 1) return haystack.includes(terms[0]);
+  return terms.every(term => haystack.includes(term));
 }
 
 // ── RENDER ──
 function render() {
-  const search = document.getElementById('search').value.toLowerCase();
-  const cls = document.getElementById('filter-class').value;
-  const dept = document.getElementById('filter-dept').value;
-  const sort = document.getElementById('sort').value;
+  const search = document.getElementById('search').value;
+  const cls    = document.getElementById('filter-class').value;
+  const dept   = document.getElementById('filter-dept').value;
+  const sem    = document.getElementById('filter-semester').value;
+  const sort   = document.getElementById('sort').value;
 
-  filtered = COURSES.filter(c => {
-    const matchSearch = !search ||
-      c.code.toLowerCase().includes(search) ||
-      c.name.toLowerCase().includes(search) ||
-      c.desc.toLowerCase().includes(search) ||
-      c.sdgs.some(s => SDG_LABELS[s].toLowerCase().includes(search));
-    const matchClass = !cls || c.classification === cls;
-    const matchDept = !dept || c.dept === dept;
-    const matchSdg = activeSdgs.size === 0 || c.sdgs.some(s => activeSdgs.has(s));
-    return matchSearch && matchClass && matchDept && matchSdg;
+  let filtered = allCourses.filter(c => {
+    if (c.level !== activeLevel) return false;
+    const matchSearch = matchesSearch(c, search);
+    const matchCls  = !cls  || c.classification === cls;
+    const matchDept = !dept || c.department === dept;
+    const matchSem  = !sem  || c.semester === sem;
+    const matchSdg  = activeSdgs.size === 0 || (c.sdgs||'').split(',').map(Number).some(s => activeSdgs.has(s));
+    return matchSearch && matchCls && matchDept && matchSem && matchSdg;
   });
 
-  // Sort
+  // Sort within each semester group
   filtered.sort((a,b) => {
-    if (sort === 'name') return a.name.localeCompare(b.name);
+    const semDiff = semesterSortKey(b.semester) - semesterSortKey(a.semester);
+    if (semDiff !== 0) return semDiff;
+    if (sort === 'name') return (a.course_title||'').localeCompare(b.course_title||'');
     if (sort === 'classification') {
-      const order = {focused:0,inclusive:1,non:2};
-      return order[a.classification] - order[b.classification];
+      const order = {Focused:0, Inclusive:1};
+      return (order[a.classification]||0) - (order[b.classification]||0);
     }
-    return a.code.localeCompare(b.code);
+    // Default: course code (dept + number)
+    const codeA = `${a.department} ${a.course_number}`;
+    const codeB = `${b.department} ${b.course_number}`;
+    return codeA.localeCompare(codeB);
   });
 
   document.getElementById('count').textContent = filtered.length;
 
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
+  // Group by semester
+  const bySemester = new Map();
+  filtered.forEach(c => {
+    if (!bySemester.has(c.semester)) bySemester.set(c.semester, []);
+    bySemester.get(c.semester).push(c);
+  });
+
+  const container = document.getElementById('results-container');
+  container.innerHTML = '';
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<div class="empty"><div class="empty-icon">🌱</div><h3>No courses found</h3><p>Try adjusting your filters or search terms.</p></div>`;
+    container.innerHTML = `<div class="semester-section"><div class="courses-grid"><div class="empty"><div class="empty-icon">🌱</div><h3>No courses found</h3><p>Try adjusting your filters or search terms.</p></div></div></div>`;
     return;
   }
 
-  filtered.forEach((c, i) => {
-    const card = document.createElement('div');
-    card.className = `card ${c.classification}`;
-    card.style.animationDelay = `${i * 0.04}s`;
+  // Render each semester group
+  const semKeys = [...bySemester.keys()].sort((a,b) => semesterSortKey(b) - semesterSortKey(a));
+  semKeys.forEach(sem => {
+    const courses = bySemester.get(sem);
+    const section = document.createElement('div');
+    section.className = 'semester-section';
+    section.setAttribute('aria-label', sem);
 
-    const badgeClass = c.classification === 'focused' ? 'badge-focused'
-      : c.classification === 'inclusive' ? 'badge-inclusive' : 'badge-non';
-    const badgeLabel = c.classification === 'focused' ? '● Focused'
-      : c.classification === 'inclusive' ? '◐ Inclusive' : '○ Non-Sustainable';
+    const headingId = `sem-heading-${semKeys.indexOf(sem)}`;
+    const gridId = `sem-grid-${semKeys.indexOf(sem)}`;
 
-    const sdgHtml = c.sdgs.length
-      ? c.sdgs.map(s=>`<span class="sdg-tag">SDG ${s}</span>`).join('')
-      : '<span style="font-size:0.76rem;color:#bbb;">No SDGs</span>';
+    const heading = document.createElement('button');
+    heading.className = 'semester-heading';
+    heading.id = headingId;
+    heading.setAttribute('aria-expanded', 'true');
+    heading.setAttribute('aria-controls', gridId);
+    heading.innerHTML = `<span class="semester-caret" aria-hidden="true">▾</span><span class="semester-name">${escHtml(sem)}</span> <span class="semester-count">${courses.length} course${courses.length!==1?'s':''}</span>`;
+    heading.addEventListener('click', () => {
+      const collapsed = section.classList.toggle('collapsed');
+      heading.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    });
+    section.appendChild(heading);
 
-    card.innerHTML = `
-      <div class="card-top">
-        <span class="course-code">${c.code} · ${c.dept}</span>
-        <span class="classification-badge ${badgeClass}">${badgeLabel}</span>
-      </div>
-      <div class="course-name">${c.name}</div>
-      <div class="course-desc" data-full-desc="${c.desc.replace(/"/g,'&quot;')}">${c.desc}</div>
-      <div class="card-footer">
-        <div class="sdg-tags">${sdgHtml}</div>
-        <a class="syllabus-link" href="${c.syllabus}">Syllabus ↗</a>
-      </div>
-    `;
-    grid.appendChild(card);
+    const grid = document.createElement('div');
+    grid.className = 'courses-grid';
+    grid.id = gridId;
+    grid.setAttribute('role', 'region');
+    grid.setAttribute('aria-labelledby', headingId);
+    courses.forEach(c => grid.appendChild(buildCard(c)));
+    section.appendChild(grid);
+    container.appendChild(section);
   });
 }
 
-// ── EXPAND / COLLAPSE HANDLING ──
-function toggleCardExpand(card) {
-  const desc = card.querySelector('.course-desc');
-  if (!desc) return;
-  const isExpanded = card.classList.toggle('expanded');
-  if (isExpanded) {
-    desc.textContent = desc.dataset.fullDesc;
-  } else {
-    // collapse back to truncated text (we keep original dataset)
-    const full = desc.dataset.fullDesc;
-    // replicate CSS clamp fallback by truncating to ~220 chars for preview
-    desc.textContent = full.length > 220 ? full.slice(0,220).trim() + '…' : full;
-  }
+// ── CARD ──
+function buildCard(c) {
+  const card = document.createElement('article');
+  card.className = `card ${(c.classification||'').toLowerCase()}`;
+  card.setAttribute('aria-label', `${c.department} ${c.course_number}: ${c.course_title}`);
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-expanded', 'false');
+
+  const badgeClass = c.classification === 'Focused' ? 'badge-focused' : 'badge-inclusive';
+  const badgeLabel = c.classification === 'Focused' ? '● Focused' : '◐ Inclusive';
+
+  const sdgNums = (c.sdgs||'').split(',').map(Number).filter(Boolean);
+  const sdgHtml = sdgNums.length
+    ? sdgNums.map(s => `<span class="sdg-tag" style="--sdg-color:${SDG_COLORS[s]||''}" title="SDG ${s}: ${SDG_LABELS[s]}">SDG ${s}</span>`).join('')
+    : '<span class="no-sdgs">No SDGs tagged</span>';
+
+  const crossListed = c.all_departments && c.all_departments.includes('/') 
+    ? `<div class="cross-listed">Also listed: ${c.all_departments.split('/').filter(d=>d.trim()!==c.department).map(d=>`${d.trim()} ${c.course_number}`).join(', ')}</div>` 
+    : '';
+
+  const syllabusUrl = getCourseSyllabusUrl(c);
+  const syllabusHtml = syllabusUrl
+    ? `<a class="syllabus-link" href="${escHtml(syllabusUrl)}" target="_blank" rel="noopener noreferrer" aria-label="View syllabus for ${escHtml(c.course_title)} (opens in new tab)">Syllabus ↗</a>`
+    : '';
+
+  card.innerHTML = `
+    <div class="card-top">
+      <div>
+        <div class="course-code">${escHtml(c.department)} ${escHtml(String(c.course_number))}</div>
+        ${crossListed}
+      </div>
+      <span class="classification-badge ${badgeClass}" aria-label="Classification: ${escHtml(c.classification)}">${badgeLabel}</span>
+    </div>
+    <div class="course-name">${escHtml(c.course_title||'')}</div>
+    <div class="course-desc">${escHtml(c.description||'')}</div>
+    <div class="card-footer">
+      <div class="sdg-tags" aria-label="Sustainable Development Goals">${sdgHtml}</div>
+      ${syllabusHtml}
+    </div>`;
+
+  return card;
 }
 
-// Delegate click/keyboard for cards
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── TAB SWITCHING ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+
+    const isReclass = btn.dataset.level === '__reclass';
+    const resultCount = document.querySelector('.result-count');
+    document.getElementById('courses-view').hidden = isReclass;
+    document.getElementById('reclass-view').hidden = !isReclass;
+    if (resultCount) {
+      resultCount.hidden = isReclass;
+    }
+    if (!isReclass) {
+      activeLevel = btn.dataset.level;
+      document.getElementById('tab-panel').setAttribute('aria-labelledby', btn.id);
+      render();
+    }
+  });
+});
+
+// ── CARD EXPAND/COLLAPSE ──
+function toggleRowExpansion(card, shouldExpand) {
+  const grid = card.closest('.courses-grid');
+  if (!grid) return;
+
+  const rowTop = card.offsetTop;
+  grid.querySelectorAll('.card').forEach(other => {
+    if (Math.abs(other.offsetTop - rowTop) < 2) {
+      other.classList.toggle('expanded', shouldExpand);
+      other.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
+    }
+  });
+}
+
+function toggleCardFromEvent(card) {
+  toggleRowExpansion(card, !card.classList.contains('expanded'));
+}
 document.addEventListener('click', (e) => {
+  if (e.target.closest('a')) return;
   const card = e.target.closest('.card');
   if (!card) return;
-  // ignore clicks on links
-  if (e.target.closest('a')) return;
-  toggleCardExpand(card);
+  toggleCardFromEvent(card);
 });
-
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Enter' && e.key !== ' ') return;
-  const active = document.activeElement.closest ? document.activeElement.closest('.card') : null;
-  if (!active) return;
+  const card = document.activeElement && document.activeElement.closest && document.activeElement.closest('.card');
+  if (!card) return;
   e.preventDefault();
-  toggleCardExpand(active);
+  toggleCardFromEvent(card);
 });
 
-// ── INIT ──
-buildSdgPills();
-buildDeptFilter();
-updateStats();
-render();
+// ── WIRE CONTROLS ──
+['search','filter-class','filter-dept','filter-semester','sort'].forEach(id => {
+  document.getElementById(id).addEventListener('input', render);
+  document.getElementById(id).addEventListener('change', render);
+});
 
-document.getElementById('search').addEventListener('input', render);
-document.getElementById('filter-class').addEventListener('change', render);
-document.getElementById('filter-dept').addEventListener('change', render);
-document.getElementById('sort').addEventListener('change', render);
+// ── BOOT ──
+loadAll();
 </script>
 </body>
 </html>

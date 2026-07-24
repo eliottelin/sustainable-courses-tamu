@@ -1,0 +1,50 @@
+name: Convert syllabi review XLSX to site CSV
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**.xlsx'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Convert every XLSX in data/ to per-semester CSVs
+        run: python3 scripts/xlsx_to_csv.py data/*.xlsx
+
+      - name: Rebuild data/manifest.json
+        run: |
+          python3 - <<'EOF'
+          import json, glob
+          files = sorted(f'data/{f.split("/")[-1]}' for f in glob.glob('data/*.csv'))
+          with open('data/manifest.json', 'w') as fh:
+              json.dump(files, fh, indent=2)
+              fh.write('\n')
+          print(json.dumps(files, indent=2))
+          EOF
+
+      - name: Commit updated CSVs and manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/*.csv data/manifest.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "Auto-convert syllabi review XLSX to CSV"
+            git push
+          fi
