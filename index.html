@@ -28,7 +28,7 @@
     --inclusive-bg: #f0f5ec;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); min-height: 100vh; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-dark); min-height: 100vh; overflow-x: hidden; }
 
   /* ── HEADER ── */
   header { background: var(--green-dark); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,0.25); }
@@ -38,10 +38,11 @@
   .logo-text-group { display: flex; flex-direction: column; gap: 1px; }
   .logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
   .logo-sub { color: var(--white); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; }
-  .header-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: var(--white); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; font-weight: 600; }
+  .header-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: var(--white); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; font-weight: 600; transition: box-shadow 0.2s ease, transform 0.2s ease; }
+  .header-tag:hover, .header-tag:focus-visible { box-shadow: 0 0 20px rgba(166,206,63,0.35), 0 0 35px rgba(255,255,255,0.18); transform: translateY(-1px); }
 
   /* ── HERO ── */
-  .hero { background: var(--maroon); padding: 64px 32px 64px; text-align: center; position: relative; overflow: hidden; }
+  .hero { background: var(--maroon); padding: 64px 32px; text-align: center; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(166,206,63,0.07) 0%, transparent 60%); pointer-events: none; }
   .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--white); font-weight: 700; margin-bottom: 14px; }
   .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.9rem, 4.5vw, 3rem); color: var(--white); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
@@ -66,7 +67,7 @@
   .result-count strong { color: var(--green-dark); }
 
   /* ── CONTROLS ── */
-  .controls-wrap { background: var(--off-white); border-bottom: 1px solid var(--card-border); position: sticky; top: 70px; z-index: 90; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .controls-wrap { background: var(--off-white); border-bottom: 1px solid var(--card-border); position: sticky; top: var(--header-h, 70px); z-index: 90; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
   .controls { max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .search-wrap { position: relative; flex: 1 1 280px; min-width: 200px; max-width: 360px; }
   .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-light); font-size: 14px; pointer-events: none; }
@@ -94,6 +95,7 @@
   .sdg-pill.active .sdg-dot { background: rgba(255,255,255,0.35); }
   .sdg-pill.active.dark-text { color: var(--text-dark); }
   .sdg-pill:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+  .sdg-active-caption { font-size: 0.75rem; color: var(--text-light); margin-top: 8px; min-height: 1em; }
 
   /* ── SDG TOOLTIP ── */
   .sdg-pill { position: relative; }
@@ -145,15 +147,15 @@
   .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 10px 0 0 10px; }
   .card.focused::before { background: var(--green-dark); }
   .card.inclusive::before { background: var(--green-pale); }
-  .card:hover { box-shadow: 0 4px 18px rgba(58,97,36,0.13); transform: translateY(-2px); }
+  .card:hover { box-shadow: 0 10px 30px rgba(58,97,36,0.16), 0 0 18px rgba(166,206,63,0.18); transform: translateY(-2px); }
   .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
   .course-code { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--green-mid); }
   .cross-listed { font-size: 0.65rem; color: var(--text-light); margin-top: 1px; }
   .classification-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
   .badge-focused { background: var(--focused-bg); color: var(--green-dark); border: 1px solid rgba(58,97,36,0.25); }
   .badge-inclusive { background: var(--inclusive-bg); color: var(--green-mid); border: 1px solid rgba(74,122,46,0.2); }
-  .course-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; margin-bottom: 8px; }
-  .course-desc { font-size: 0.81rem; color: var(--text-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 14px; }
+  .course-name { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; margin-bottom: 8px; overflow-wrap: break-word; }
+  .course-desc { font-size: 0.81rem; color: var(--text-light); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 14px; overflow-wrap: break-word; }
   .card-footer { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-top: auto; width: 100%; }
   .sdg-tags { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; min-width: 0; }
   .sdg-tag { font-size: 0.67rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: color-mix(in srgb, var(--sdg-color, var(--green-mid)) 14%, white); color: var(--sdg-color, var(--green-mid)); border: 1px solid color-mix(in srgb, var(--sdg-color, var(--green-mid)) 35%, white); }
@@ -193,16 +195,44 @@
   .reclass-wrap iframe { width: 100%; height: 900px; border: 1.5px solid var(--card-border); border-radius: 10px; background: var(--white); }
 
   /* ── RESPONSIVE ── */
+
+  /* Larger tap targets on any touch device (phones and tablets alike) */
+  @media (max-width: 680px), (pointer: coarse) {
+    .sdg-pill { padding: 10px 14px 10px 8px; min-height: 44px; }
+    .header-tag { padding: 10px 14px; }
+    .tab-btn { min-height: 44px; }
+    .syllabus-link { padding: 8px 10px; min-height: 44px; display: inline-flex; align-items: center; }
+  }
+
+  /* iPad portrait / narrow landscape */
+  @media (min-width: 681px) and (max-width: 1024px) {
+    .header-inner, .controls, .legend-wrap, .sdg-filter-wrap, .semester-section, .tabs-inner { padding-left: 24px; padding-right: 24px; }
+    .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .search-wrap { grid-column: 1 / -1; min-width: 0; max-width: none; }
+    .controls .result-count { grid-column: 1 / -1; }
+  }
+
+  /* Phones */
   @media (max-width: 680px) {
     .controls { flex-direction: column; align-items: stretch; }
     .controls .result-count { text-align: right; }
+    .search-wrap { flex: 0 0 auto; min-width: 0; max-width: none; width: 100%; }
     .tabs-inner { flex-direction: column; align-items: flex-start; padding: 0; }
-    .tabs { padding: 0 16px; width: 100%; border-bottom: 1px solid var(--card-border); }
+    .tabs { padding: 0 16px; width: 100%; border-bottom: 1px solid var(--card-border); overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .tab-btn { flex: 0 0 auto; white-space: nowrap; padding: 12px 14px; font-size: 0.82rem; }
     .tabs-wrap .result-count { padding: 12px 16px; text-align: right; width: 100%; margin-left: 0; }
+    .hero { padding: 40px 20px; }
     .hero-stats { gap: 24px; }
     .courses-grid { grid-template-columns: 1fr; }
     .header-inner, .controls, .legend-wrap, .sdg-filter-wrap, .semester-section { padding-left: 16px; padding-right: 16px; }
     .logo-img { height: 34px; }
+    .reclass-wrap iframe { height: calc(100dvh - 220px); min-height: 480px; }
+  }
+
+  /* Smallest iPhones (SE, mini) */
+  @media (max-width: 380px) {
+    .tab-btn { padding: 10px 8px; font-size: 0.76rem; }
+    .sdg-pill { font-size: 0.7rem; }
   }
 
 </style>
@@ -285,6 +315,7 @@
       <div class="sdg-filter-wrap" aria-label="Filter by Sustainable Development Goal">
         <div class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal</div>
         <div class="sdg-pills" id="sdg-pills" role="group" aria-labelledby="sdg-label"></div>
+        <div class="sdg-active-caption" id="active-sdg-caption" aria-live="polite"></div>
       </div>
 
       <div class="legend-wrap" aria-label="Classification legend">
@@ -509,6 +540,12 @@ function updatePillStates() {
     p.classList.toggle('dark-text', !isAll && isActive && SDG_DARK_TEXT.has(sdg));
     p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
+  const caption = document.getElementById('active-sdg-caption');
+  if (caption) {
+    caption.textContent = activeSdgs.size
+      ? 'Filtering: ' + [...activeSdgs].sort((a, b) => a - b).map(s => `SDG ${s}: ${SDG_LABELS[s]}`).join(' · ')
+      : '';
+  }
 }
 
 // ── STATS ──
@@ -739,6 +776,16 @@ document.addEventListener('keydown', (e) => {
   document.getElementById(id).addEventListener('input', render);
   document.getElementById(id).addEventListener('change', render);
 });
+
+// ── HEADER HEIGHT (keeps sticky controls bar aligned under the header) ──
+function updateHeaderOffset() {
+  const header = document.querySelector('header');
+  if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+}
+updateHeaderOffset();
+window.addEventListener('resize', updateHeaderOffset);
+const headerEl = document.querySelector('header');
+if (headerEl && window.ResizeObserver) new ResizeObserver(updateHeaderOffset).observe(headerEl);
 
 // ── BOOT ──
 loadAll();
