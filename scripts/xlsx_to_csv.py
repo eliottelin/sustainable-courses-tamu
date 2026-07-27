@@ -20,7 +20,10 @@ The script:
     the result is written to --output (or "data/<semester>.csv").
   - If --semester is omitted, every semester found in the workbooks is
     converted, each to its own "data/<semester>.csv".
-  - Expands cross-listed courses (AFST/ENGL → two rows)
+  - Expands cross-listed courses (AFST/ENGL → two rows). Handles both the old
+    "Department(s)=short codes, Course=number" layout and the newer
+    "Department(s)=full name(s), Course='CODE[/CODE...] number'" layout,
+    surfacing full department name(s) in the 'department_full' column.
   - Converts 'yes' SDG cells to comma-separated SDG numbers
   - If the XLSX already has a 'Syllabus URL' column, it maps it automatically
   - When multiple xlsx files are passed, any sheet in the "raw" layout
@@ -31,7 +34,7 @@ The script:
     or the raw lookup layout are silently skipped, so unrelated workbooks in
     data/ are safe.
 """
-import sys, csv, argparse
+import sys, csv, re, argparse
 import openpyxl
 
 def parse_args():
@@ -81,6 +84,23 @@ def build_syllabus_lookup(workbooks):
                 lookup.setdefault(key, str(url).strip())
     return lookup
 
+def parse_course_cell(raw):
+    """'Course' cell may be old-style ('393') or new-style ('AFST/ENGL 393').
+    Returns (codes, number) - codes is [] for old-style (codes come from the
+    Department(s) cell instead)."""
+    raw = raw.strip()
+    head, _, tail = raw.rpartition(' ')
+    if head and any(ch.isalpha() for ch in head):
+        return [c.strip() for c in head.split('/') if c.strip()], tail.strip()
+    return [], raw
+
+def parse_dept_names(raw):
+    """Split a Department(s) cell into full names. New-style workbooks join
+    cross-listed names with 'x'/'X' and irregular spacing; old-style is a
+    single short code with no separator."""
+    parts = re.split(r'\s+[xX]\s+', raw.strip())
+    return [p.strip() for p in parts if p.strip()]
+
 def parse_sheet(ws, level, semester, syllabus_lookup=None):
     rows = list(ws.iter_rows(min_row=2, values_only=True))
     if not rows:
@@ -108,7 +128,7 @@ def parse_sheet(ws, level, semester, syllabus_lookup=None):
             continue
         title      = str(row[0]).strip()
         depts_raw  = str(row[1]).strip() if len(row) > 1 and row[1] else ''
-        course_num = str(row[2]).strip() if len(row) > 2 and row[2] else ''
+        course_raw = str(row[2]).strip() if len(row) > 2 and row[2] else ''
         # level from col 3 (UG/G) or passed in
         description = str(row[4]).strip() if len(row) > 4 and row[4] else ''
         cls         = str(row[5]).strip() if len(row) > 5 and row[5] else ''
@@ -125,18 +145,37 @@ def parse_sheet(ws, level, semester, syllabus_lookup=None):
         if url_col is not None and url_col < len(row) and row[url_col]:
             syllabus_url = str(row[url_col]).strip()
 
-        dept_list = [d.strip() for d in depts_raw.split('/') if d.strip()]
+        codes_from_course, course_num = parse_course_cell(course_raw)
+        if codes_from_course:
+            # New-style row: dept codes live in the Course cell, full names in
+            # the Department(s) cell (joined by 'x'/'X', not always 1:1 with codes).
+            dept_list = codes_from_course
+            dept_names = parse_dept_names(depts_raw)
+            if len(dept_names) == len(dept_list):
+                full_names = dept_names
+            else:
+                joined = ' / '.join(dept_names) if dept_names else ''
+                full_names = [joined] * len(dept_list)
+        else:
+            # Old-style row: short code(s) come from the Department(s) cell itself.
+            dept_list = [d.strip() for d in depts_raw.split('/') if d.strip()]
+            full_names = [''] * len(dept_list)
+
         if not dept_list:
             dept_list = ['']
+            full_names = ['']
 
-        for dept in dept_list:
+        all_departments = '/'.join(dept_list)
+
+        for dept, full_name in zip(dept_list, full_names):
             row_url = syllabus_url
             if not row_url and syllabus_lookup and course_num:
                 row_url = syllabus_lookup.get((dept.strip().upper(), course_num), '')
             out.append({
                 'course_title':    title,
                 'department':      dept,
-                'all_departments': depts_raw,
+                'department_full': full_name,
+                'all_departments': all_departments,
                 'course_number':   course_num,
                 'level':           level,
                 'description':     description,
@@ -158,6 +197,7 @@ def main():
     syllabus_lookup = build_syllabus_lookup(workbooks.values())
 
     by_semester = {}
+    sheet_sources = {}  # (semester, level) -> path of the first file that contributed rows for it
     for path, wb in workbooks.items():
         for sheet_name in wb.sheetnames:
             if sheet_name.lower() == 'summary':
@@ -169,6 +209,14 @@ def main():
             if args.semester and semester != args.semester:
                 continue
             rows = parse_sheet(wb[sheet_name], level, semester, syllabus_lookup)
+            if rows:
+                key = (semester, level)
+                if key in sheet_sources and sheet_sources[key] != path:
+                    print(f'  WARNING: "{semester} - {level}" rows found in both {sheet_sources[key]} and {path} '
+                          f'- combining, but this usually means an old backup workbook was left in data/ '
+                          f'unarchived. Move outdated review workbooks to data/archive/.')
+                else:
+                    sheet_sources[key] = path
             by_semester.setdefault(semester, []).extend(rows)
             print(f'  {path} :: {sheet_name}: {len(rows)} rows -> semester "{semester}", level "{level}"')
 
@@ -176,7 +224,7 @@ def main():
         print('\nNo matching rows found; nothing written.')
         return
 
-    fieldnames = ['course_title','department','all_departments','course_number',
+    fieldnames = ['course_title','department','department_full','all_departments','course_number',
                   'level','description','classification','sdgs','syllabus_url','semester']
     for semester, rows in by_semester.items():
         if not rows:
