@@ -38,7 +38,7 @@
   .logo-text-group { display: flex; flex-direction: column; gap: 1px; }
   .logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
   .logo-sub { color: var(--white); font-size: 0.68rem; font-weight: 400; letter-spacing: 0.07em; text-transform: uppercase; }
-  .header-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: var(--white); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; font-weight: 600; transition: box-shadow 0.2s ease, transform 0.2s ease; }
+  .header-tag { display: inline-flex; align-items: center; justify-content: center; text-align: center; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: var(--white); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; font-weight: 600; transition: box-shadow 0.2s ease, transform 0.2s ease; }
   .header-tag:hover, .header-tag:focus-visible { box-shadow: 0 0 20px rgba(166,206,63,0.35), 0 0 35px rgba(255,255,255,0.18); transform: translateY(-1px); }
 
   /* ── HERO ── */
@@ -80,8 +80,18 @@
 
   /* ── SDG FILTER ── */
   .sdg-filter-wrap { max-width: 1200px; margin: 0 auto; padding: 14px 32px 4px; }
-  .sdg-filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 8px; font-weight: 700; }
-  .sdg-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .sdg-filter-heading {
+    font-family: 'DM Sans', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-light); font-weight: 700; display: flex; align-items: center; gap: 8px; width: 100%;
+    background: none; border: none; padding: 0 0 8px; cursor: pointer; text-align: left;
+  }
+  .sdg-filter-heading:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 3px; }
+  .sdg-filter-caret { color: var(--green-mid); font-size: 0.9em; transition: transform 0.18s; flex-shrink: 0; }
+  .sdg-filter-wrap.collapsed .sdg-filter-caret { transform: rotate(-90deg); }
+  .sdg-filter-wrap.collapsed .sdg-filter-body { display: none; }
+  .sdg-active-count { margin-left: auto; font-weight: 700; color: var(--green-dark); background: var(--focused-bg); border-radius: 10px; padding: 1px 8px; font-size: 0.68rem; }
+  .sdg-active-count:empty { display: none; }
+  .sdg-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
   .sdg-pill {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 4px 12px 4px 6px; border-radius: 20px; font-size: 0.73rem; font-weight: 700;
@@ -196,11 +206,96 @@
   .reclass-wrap p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
   .reclass-wrap iframe { width: 100%; height: 900px; border: 1.5px solid var(--card-border); border-radius: 10px; background: var(--white); }
 
+  /* ── SDG QUIZ MODAL ── */
+  .quiz-overlay {
+    position: fixed; inset: 0; background: rgba(26,26,26,0.55);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; z-index: 500; animation: quizFadeIn 0.18s ease-out;
+  }
+  .quiz-overlay[hidden] { display: none; }
+  @keyframes quizFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .quiz-modal {
+    background: var(--white); border-radius: 14px; max-width: 600px; width: 100%;
+    max-height: 90vh; overflow-y: auto; padding: 32px 28px 24px; position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: quizPopIn 0.22s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes quizPopIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+  .quiz-close {
+    position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+    border-radius: 50%; border: none; background: var(--off-white); color: var(--text-mid);
+    font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .quiz-close:hover { background: var(--card-border); }
+  .quiz-close:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+
+  .quiz-progress { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 700; margin-bottom: 8px; }
+  .quiz-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--green-dark); margin-bottom: 6px; padding-right: 24px; }
+  .quiz-subtitle { font-size: 0.85rem; color: var(--text-light); margin-bottom: 18px; }
+
+  .quiz-option-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 12px; width: 100%;
+    padding: 12px 14px; border-radius: 10px; font-size: 0.86rem; font-weight: 500; line-height: 1.4;
+    cursor: pointer; border: 1.5px solid var(--card-border); background: var(--white);
+    color: var(--text-mid); transition: all 0.15s; user-select: none; text-align: left;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .quiz-option:hover { border-color: var(--green-mid); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+  .quiz-option:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+  .quiz-option.ranked { border-color: var(--green-dark); background: var(--focused-bg); color: var(--text-dark); font-weight: 600; }
+  .quiz-option-rank {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; background: var(--card-border); color: var(--text-mid);
+    font-size: 0.74rem; font-weight: 700; flex-shrink: 0;
+  }
+  .quiz-option.ranked .quiz-option-rank { background: var(--green-dark); color: var(--white); }
+  .quiz-hint { font-size: 0.75rem; color: var(--text-light); min-height: 1.2em; margin-bottom: 12px; }
+
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
+  .quiz-btn { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; transition: all 0.15s; }
+  .quiz-btn-primary { background: var(--green-dark); color: var(--white); }
+  .quiz-btn-primary:hover { background: var(--green-mid); }
+  .quiz-btn-primary:disabled { background: var(--card-border); color: var(--text-light); cursor: not-allowed; }
+  .quiz-btn-ghost { background: none; color: var(--text-light); }
+  .quiz-btn-ghost:hover { color: var(--text-dark); }
+  .quiz-btn:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 2px; }
+
+  .quiz-result-group { margin-bottom: 14px; }
+  .quiz-result-rank-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 700; margin-bottom: 6px; }
+  .quiz-result-card {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 10px;
+    border: 1.5px solid var(--sdg-color, var(--card-border)); margin-bottom: 8px;
+    background: color-mix(in srgb, var(--sdg-color, var(--green-mid)) 8%, white);
+  }
+  .quiz-result-dot { width: 36px; height: 36px; border-radius: 50%; background: var(--sdg-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+  .quiz-result-dot.dark-text { color: var(--text-dark); }
+  .quiz-result-name { font-weight: 700; color: var(--text-dark); }
+  .quiz-result-score { margin-left: auto; font-size: 0.75rem; color: var(--text-light); font-weight: 600; white-space: nowrap; }
+
+  .quiz-expand-toggle {
+    background: none; border: none; color: var(--green-dark); font-weight: 700; font-size: 0.8rem;
+    cursor: pointer; padding: 6px 0; margin-bottom: 6px; font-family: 'DM Sans', sans-serif;
+  }
+  .quiz-expand-toggle:hover { text-decoration: underline; }
+  .quiz-full-ranking { border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 4px; }
+  .quiz-full-ranking .quiz-result-card { padding: 10px 14px; }
+
+  @media (max-width: 680px) {
+    .quiz-modal { padding: 24px 18px 18px; max-height: 95vh; }
+    .quiz-option { padding: 12px; min-height: 44px; }
+    .quiz-close { width: 40px; height: 40px; }
+  }
+
   /* ── RESPONSIVE ── */
 
   /* Larger tap targets on any touch device (phones and tablets alike) */
   @media (max-width: 680px), (pointer: coarse) {
     .sdg-pill { padding: 10px 14px 10px 8px; min-height: 44px; }
+    .sdg-filter-heading { min-height: 44px; }
     .header-tag { padding: 10px 14px; }
     .tab-btn { min-height: 44px; }
     .syllabus-link { padding: 8px 10px; min-height: 44px; display: inline-flex; align-items: center; }
@@ -278,6 +373,7 @@
       <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-panel" data-level="Undergraduate" id="tab-ug">Undergraduate</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel" data-level="Graduate" id="tab-grad">Graduate</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="reclass-view" data-level="__reclass" id="tab-reclass">New Course or Reclassification?</button>
+      <button class="tab-btn" type="button" aria-haspopup="dialog" data-level="__quiz" id="tab-quiz">Retake SDG Quiz</button>
     </div>
     <div class="result-count" aria-live="polite" aria-atomic="true"><strong id="count">0</strong> courses</div>
   </div>
@@ -316,10 +412,16 @@
         </div>
       </div>
 
-      <div class="sdg-filter-wrap" aria-label="Filter by Sustainable Development Goal">
-        <div class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal</div>
-        <div class="sdg-pills" id="sdg-pills" role="group" aria-labelledby="sdg-label"></div>
-        <div class="sdg-active-caption" id="active-sdg-caption" aria-live="polite"></div>
+      <div class="sdg-filter-wrap" id="sdg-filter-wrap" aria-label="Filter by Sustainable Development Goal">
+        <button class="sdg-filter-heading" id="sdg-filter-toggle" aria-expanded="true" aria-controls="sdg-filter-body">
+          <span class="sdg-filter-caret" aria-hidden="true">▾</span>
+          <span class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal</span>
+          <span class="sdg-active-count" id="sdg-active-count" aria-hidden="true"></span>
+        </button>
+        <div class="sdg-filter-body" id="sdg-filter-body">
+          <div class="sdg-pills" id="sdg-pills" role="group" aria-labelledby="sdg-label"></div>
+          <div class="sdg-active-caption" id="active-sdg-caption" aria-live="polite"></div>
+        </div>
       </div>
 
       <div class="legend-wrap" aria-label="Classification legend">
@@ -347,6 +449,35 @@
   <p>Texas A&amp;M University · <a href="https://sustainability.tamu.edu">Office of Sustainability &amp; Campus Enrichment</a></p>
   <p style="margin-top:5px;opacity:0.65;">Classifications based on <a href="https://stars.aashe.org">AASHE STARS</a> criteria · SDG alignment per UN Sustainable Development Goals</p>
 </footer>
+
+<div class="quiz-overlay" id="quiz-overlay" hidden>
+  <div class="quiz-modal" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
+    <button class="quiz-close" id="quiz-close" aria-label="Close quiz">✕</button>
+
+    <div id="quiz-question-view">
+      <div class="quiz-progress" id="quiz-progress" aria-hidden="true"></div>
+      <h2 class="quiz-title" id="quiz-title"></h2>
+      <p class="quiz-subtitle">Pick up to 3, in order of how much they matter to you.</p>
+      <div class="quiz-option-list" id="quiz-option-list" role="group" aria-label="Answer options"></div>
+      <p class="quiz-hint" id="quiz-hint" aria-live="polite"></p>
+      <div class="quiz-nav">
+        <button class="quiz-btn quiz-btn-ghost" id="quiz-skip" type="button">Skip question</button>
+        <button class="quiz-btn quiz-btn-primary" id="quiz-next" type="button">Next</button>
+      </div>
+    </div>
+
+    <div id="quiz-results-view" hidden>
+      <h2 class="quiz-title">Your top SDG match</h2>
+      <div id="quiz-results-body"></div>
+      <button class="quiz-expand-toggle" id="quiz-expand-toggle" type="button" aria-expanded="false" aria-controls="quiz-full-ranking">See full 17-SDG ranking ▾</button>
+      <div class="quiz-full-ranking" id="quiz-full-ranking" hidden></div>
+      <div class="quiz-nav">
+        <button class="quiz-btn quiz-btn-ghost" id="quiz-retake" type="button">Retake quiz</button>
+        <button class="quiz-btn quiz-btn-primary" id="quiz-view-courses" type="button">View matching courses</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ── CONFIG ──
@@ -377,6 +508,60 @@ const SDG_COLORS = {
 };
 // Goals with pale/yellow backgrounds need dark text for contrast when filled.
 const SDG_DARK_TEXT = new Set([7, 11, 12]);
+
+// ── SDG QUIZ DATA (v2) ──
+// 7 questions (six with 5 options, one with 4) = 34 answer slots = exactly
+// 2 appearances per SDG (34 / 17). No SDG repeats within a single question.
+const QUIZ_QUESTIONS = [
+  { prompt: "You just got an unexpected $500. What's the first thing you do?", options: [
+    { text: "Cover strangers' grocery bills when they come up short at checkout", sdg: 1 },
+    { text: "Go shopping at a local small business", sdg: 8 },
+    { text: "Sponsor a local trail or park cleanup", sdg: 15 },
+    { text: "Donate to a fund for first-gen women in STEM", sdg: 5 },
+    { text: "Buy secondhand/vintage instead of fast fashion", sdg: 12 }
+  ]},
+  { prompt: 'Which of these would make your whole day?', options: [
+    { text: 'You hear the campus food pantry just got fully restocked', sdg: 2 },
+    { text: "That pothole/bridge that's been broken forever finally gets fixed", sdg: 9 },
+    { text: 'A local corruption case gets caught and fixed', sdg: 16 },
+    { text: 'Your town announces the tap water is fully safe to drink', sdg: 6 },
+    { text: 'Your city announces it hit its clean-energy goal early', sdg: 13 }
+  ]},
+  { prompt: 'Pick a documentary for a lazy Sunday binge.', options: [
+    { text: 'ER doctors on the front lines, saving lives', sdg: 3 },
+    { text: 'A scholarship program that transformed an entire town', sdg: 10 },
+    { text: 'How multiple countries teamed up to eradicate a disease', sdg: 17 },
+    { text: 'The race to build the first fully solar-powered city', sdg: 7 },
+    { text: 'Scientists regrowing a coral reef from scratch', sdg: 14 }
+  ]},
+  { prompt: 'If your college experience could guarantee ONE thing, what would it be?', options: [
+    { text: 'Resources available for all classes that support learning in different ways.', sdg: 4 },
+    { text: 'Affordable, walkable housing within 10 minutes of campus', sdg: 11 },
+    { text: 'An emergency fund for students in need', sdg: 1 },
+    { text: "A job placement you're perfectly qualified for with just compensation", sdg: 8 },
+    { text: 'Protected green spaces/trails built right into campus', sdg: 15 }
+  ]},
+  { prompt: 'Pick a superpower.', options: [
+    { text: 'Your backpack always has enough food to share with everyone around you', sdg: 2 },
+    { text: 'You can make any two people who disagree truly understand each other', sdg: 16 },
+    { text: 'You can neutralize unconscious biases', sdg: 5 },
+    { text: 'You can repair any broken machine, road, or system with a snap', sdg: 9 },
+    { text: 'Anything you throw away instantly becomes something useful instead of trash', sdg: 12 }
+  ]},
+  { prompt: 'Pick your dream trip.', options: [
+    { text: 'Helping build wells for a community without reliable clean water', sdg: 6 },
+    { text: "Touring the world's most stunning ecosystems while they're thriving", sdg: 13 },
+    { text: 'A wellness retreat built around rest and mental health', sdg: 3 },
+    { text: 'A homestay through a community-run tourism program', sdg: 10 },
+    { text: 'Volunteering abroad alongside an international relief organization', sdg: 17 }
+  ]},
+  { prompt: 'If you were organizing a fundraiser, which cause is it supporting?', options: [
+    { text: 'Bringing solar power to communities without reliable electricity', sdg: 7 },
+    { text: 'Cleaning plastic out of local waterways', sdg: 14 },
+    { text: 'School supplies and scholarships for underfunded schools', sdg: 4 },
+    { text: 'Affordable housing and green public transit', sdg: 11 }
+  ]}
+];
 
 // ── SEMESTER SORT ORDER ──
 const SEASON_ORDER = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
@@ -429,6 +614,11 @@ function parseCSVRecords(text) {
 let allCourses = [];
 let activeSdgs = new Set();
 let activeLevel = 'Undergraduate';
+
+// Quiz state
+let quizIndex = 0;
+let quizRankings = [];   // quizRankings[i] = ranked option words for question i (max 3)
+let quizScores = {};     // { [sdgNum]: totalPoints } computed at the end
 
 function getCourseIdentity(c) {
   return [
@@ -550,16 +740,183 @@ function updatePillStates() {
       ? 'Filtering: ' + [...activeSdgs].sort((a, b) => a - b).map(s => `SDG ${s}: ${SDG_LABELS[s]}`).join(' · ')
       : '';
   }
+  const activeCountEl = document.getElementById('sdg-active-count');
+  if (activeCountEl) activeCountEl.textContent = activeSdgs.size ? `${activeSdgs.size} active` : '';
 }
 
 // ── STATS ──
 function updateStats() {
-  const sus = allCourses.filter(c => c.level === 'Undergraduate'); // default view
   document.getElementById('stat-total').textContent = allCourses.length;
-  document.getElementById('stat-focused').textContent = allCourses.filter(c=>c.classification==='Focused').length;
-  document.getElementById('stat-inclusive').textContent = allCourses.filter(c=>c.classification==='Inclusive').length;
-  const sems = new Set(allCourses.map(c=>c.semester));
-  document.getElementById('stat-semesters').textContent = sems.size;
+  document.getElementById('stat-focused').textContent = allCourses.filter(c => c.classification === 'Focused').length;
+  document.getElementById('stat-inclusive').textContent = allCourses.filter(c => c.classification === 'Inclusive').length;
+  document.getElementById('stat-semesters').textContent = new Set(allCourses.map(c => c.semester)).size;
+}
+
+// ── SDG QUIZ ──
+// quizRankings[i] holds the ranked *option indices* (max 3) for question i.
+function renderQuizOptions() {
+  const q = QUIZ_QUESTIONS[quizIndex];
+  const list = document.getElementById('quiz-option-list');
+  list.innerHTML = '';
+  const ranking = quizRankings[quizIndex] || [];
+  q.options.forEach((opt, idx) => {
+    const pos = ranking.indexOf(idx);
+    const rank = pos === -1 ? 0 : pos + 1;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'quiz-option' + (rank ? ' ranked' : '');
+    btn.setAttribute('aria-pressed', rank ? 'true' : 'false');
+    btn.innerHTML = (rank ? `<span class="quiz-option-rank">${rank}</span>` : '') + `<span>${escHtml(opt.text)}</span>`;
+    btn.addEventListener('click', () => handleQuizOptionClick(idx));
+    list.appendChild(btn);
+  });
+  document.getElementById('quiz-progress').textContent = `Question ${quizIndex + 1} of ${QUIZ_QUESTIONS.length}`;
+  document.getElementById('quiz-title').textContent = q.prompt;
+  document.getElementById('quiz-hint').textContent = '';
+  document.getElementById('quiz-next').textContent = quizIndex === QUIZ_QUESTIONS.length - 1 ? 'See results' : 'Next';
+}
+
+function handleQuizOptionClick(idx) {
+  if (!quizRankings[quizIndex]) quizRankings[quizIndex] = [];
+  const current = quizRankings[quizIndex];
+  const existingPos = current.indexOf(idx);
+  if (existingPos !== -1) {
+    current.splice(existingPos, 1);
+  } else if (current.length < 3) {
+    current.push(idx);
+  } else {
+    document.getElementById('quiz-hint').textContent = 'You can rank up to 3 — tap a ranked one to remove it.';
+    return;
+  }
+  renderQuizOptions();
+}
+
+function goToNextQuizQuestion() {
+  quizIndex++;
+  if (quizIndex >= QUIZ_QUESTIONS.length) { showQuizResults(); return; }
+  renderQuizOptions();
+}
+
+function computeQuizScores() {
+  const scores = {};
+  const RANK_POINTS = [3, 2, 1];
+  quizRankings.forEach((ranking, qIdx) => {
+    if (!ranking) return;
+    const question = QUIZ_QUESTIONS[qIdx];
+    ranking.forEach((optIdx, i) => {
+      const sdg = question.options[optIdx].sdg;
+      scores[sdg] = (scores[sdg] || 0) + RANK_POINTS[i];
+    });
+  });
+  return scores;
+}
+
+// Sorts all 17 SDGs by score descending and groups ties into shared rank slots
+// (e.g. two SDGs tied at 2nd place both get rank 2; the next distinct score gets rank 4).
+function buildQuizScoreGroups(scores) {
+  const scored = Object.keys(SDG_LABELS).map(Number).map(sdg => ({ sdg, score: scores[sdg] || 0 }));
+  scored.sort((a, b) => b.score - a.score);
+  const groups = [];
+  let rank = 1, i = 0;
+  while (i < scored.length) {
+    const score = scored[i].score;
+    const items = [];
+    while (i < scored.length && scored[i].score === score) { items.push(scored[i]); i++; }
+    groups.push({ rank, score, items });
+    rank += items.length;
+  }
+  return groups;
+}
+
+function renderQuizResultGroup(group) {
+  const label = group.items.length > 1 ? `Tied for #${group.rank}` : `#${group.rank}`;
+  const cards = group.items.map(({ sdg, score }) => `
+    <div class="quiz-result-card" style="--sdg-color:${SDG_COLORS[sdg]}">
+      <div class="quiz-result-dot${SDG_DARK_TEXT.has(sdg) ? ' dark-text' : ''}">${sdg}</div>
+      <div class="quiz-result-name">SDG ${sdg}: ${escHtml(SDG_LABELS[sdg])}</div>
+      <div class="quiz-result-score">${score} pt${score !== 1 ? 's' : ''}</div>
+    </div>`).join('');
+  return `<div class="quiz-result-group"><div class="quiz-result-rank-label">${label}</div>${cards}</div>`;
+}
+
+function showQuizResults() {
+  quizScores = computeQuizScores();
+  const hasAnyPoints = Object.values(quizScores).some(v => v > 0);
+  const groups = buildQuizScoreGroups(quizScores);
+
+  const body = document.getElementById('quiz-results-body');
+  const expandToggle = document.getElementById('quiz-expand-toggle');
+  const fullRanking = document.getElementById('quiz-full-ranking');
+
+  let winners = [];
+  if (!hasAnyPoints) {
+    body.innerHTML = `<p style="color:var(--text-light);font-size:0.85rem;">Not enough answers to find a match — try again!</p>`;
+    expandToggle.hidden = true;
+    fullRanking.hidden = true;
+  } else {
+    // Top 3 SCORE groups (not necessarily top 3 SDGs — a tied group can hold several).
+    body.innerHTML = groups.slice(0, 3).map(renderQuizResultGroup).join('');
+    fullRanking.innerHTML = groups.map(renderQuizResultGroup).join('');
+    fullRanking.hidden = true;
+    expandToggle.hidden = false;
+    expandToggle.textContent = 'See full 17-SDG ranking ▾';
+    expandToggle.setAttribute('aria-expanded', 'false');
+    winners = groups[0].items.map(it => it.sdg).sort((a, b) => a - b);
+  }
+
+  document.getElementById('quiz-question-view').hidden = true;
+  document.getElementById('quiz-results-view').hidden = false;
+
+  document.getElementById('quiz-view-courses').onclick = () => {
+    activeSdgs.clear();
+    winners.forEach(sdg => activeSdgs.add(sdg));
+    updatePillStates();
+    render();
+    closeQuizModal();
+    const filterWrap = document.getElementById('sdg-filter-wrap');
+    filterWrap.classList.remove('collapsed');
+    document.getElementById('sdg-filter-toggle').setAttribute('aria-expanded', 'true');
+  };
+}
+
+function toggleQuizFullRanking() {
+  const fullRanking = document.getElementById('quiz-full-ranking');
+  const toggle = document.getElementById('quiz-expand-toggle');
+  const willExpand = fullRanking.hidden;
+  fullRanking.hidden = !willExpand;
+  toggle.setAttribute('aria-expanded', willExpand ? 'true' : 'false');
+  toggle.textContent = willExpand ? 'Hide full ranking ▴' : 'See full 17-SDG ranking ▾';
+}
+
+function resetQuiz() {
+  quizIndex = 0;
+  quizRankings = [];
+  quizScores = {};
+  document.getElementById('quiz-results-view').hidden = true;
+  document.getElementById('quiz-question-view').hidden = false;
+  renderQuizOptions();
+}
+
+const QUIZ_DISMISS_KEY = 'sdgQuizDismissed';
+
+function openQuizModal() {
+  resetQuiz();
+  const overlay = document.getElementById('quiz-overlay');
+  overlay.hidden = false;
+  document.body.style.overflow = 'hidden';
+  document.getElementById('quiz-close').focus();
+}
+
+function closeQuizModal() {
+  document.getElementById('quiz-overlay').hidden = true;
+  document.body.style.overflow = '';
+  try { localStorage.setItem(QUIZ_DISMISS_KEY, '1'); } catch (e) { /* storage unavailable */ }
+}
+
+function maybeShowQuizOnFirstVisit() {
+  let dismissed = false;
+  try { dismissed = localStorage.getItem(QUIZ_DISMISS_KEY) === '1'; } catch (e) { dismissed = false; }
+  if (!dismissed) openQuizModal();
 }
 
 function buildSearchText(c) {
@@ -727,6 +1084,7 @@ function escHtml(str) {
 // ── TAB SWITCHING ──
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
+    if (btn.dataset.level === '__quiz') { openQuizModal(); return; }
     document.querySelectorAll('.tab-btn').forEach(b => {
       b.classList.remove('active');
       b.setAttribute('aria-selected', 'false');
@@ -786,6 +1144,27 @@ document.addEventListener('keydown', (e) => {
   document.getElementById(id).addEventListener('change', render);
 });
 
+// ── SDG FILTER COLLAPSE ── (defaults expanded; state not persisted across reloads)
+const sdgFilterWrap = document.getElementById('sdg-filter-wrap');
+const sdgFilterToggle = document.getElementById('sdg-filter-toggle');
+sdgFilterToggle.addEventListener('click', () => {
+  const collapsed = sdgFilterWrap.classList.toggle('collapsed');
+  sdgFilterToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+});
+
+// ── WIRE QUIZ MODAL ──
+document.getElementById('quiz-close').addEventListener('click', closeQuizModal);
+document.getElementById('quiz-overlay').addEventListener('click', (e) => {
+  if (e.target.id === 'quiz-overlay') closeQuizModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('quiz-overlay').hidden) closeQuizModal();
+});
+document.getElementById('quiz-next').addEventListener('click', goToNextQuizQuestion);
+document.getElementById('quiz-skip').addEventListener('click', goToNextQuizQuestion);
+document.getElementById('quiz-retake').addEventListener('click', resetQuiz);
+document.getElementById('quiz-expand-toggle').addEventListener('click', toggleQuizFullRanking);
+
 // ── HEADER HEIGHT (keeps sticky controls bar aligned under the header) ──
 function updateHeaderOffset() {
   const header = document.querySelector('header');
@@ -798,6 +1177,7 @@ if (headerEl && window.ResizeObserver) new ResizeObserver(updateHeaderOffset).ob
 
 // ── BOOT ──
 loadAll();
+maybeShowQuizOnFirstVisit();
 </script>
 </body>
 </html>

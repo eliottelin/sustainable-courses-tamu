@@ -8,3 +8,14 @@ __pycache__/
 
 # Claude Code local settings (per-machine, not shared)
 .claude/
+
+# Local and build artifacts
+.env
+venv/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.vscode/
+*.egg-info
+dist/
+build/
