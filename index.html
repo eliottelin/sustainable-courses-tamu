@@ -235,6 +235,7 @@
   .quiz-progress { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); font-weight: 700; margin-bottom: 8px; }
   .quiz-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--green-dark); margin-bottom: 6px; padding-right: 24px; }
   .quiz-subtitle { font-size: 0.85rem; color: var(--text-light); margin-bottom: 18px; }
+  .quiz-disclaimer { font-size: 0.72rem; color: var(--text-light); font-style: italic; margin-bottom: 18px; }
 
   .quiz-option-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
   .quiz-option {
@@ -256,6 +257,7 @@
   .quiz-hint { font-size: 0.75rem; color: var(--text-light); min-height: 1.2em; margin-bottom: 12px; }
 
   .quiz-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; }
+  .quiz-nav-end { justify-content: flex-end; }
   .quiz-btn { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; transition: all 0.15s; }
   .quiz-btn-primary { background: var(--green-dark); color: var(--white); }
   .quiz-btn-primary:hover { background: var(--green-mid); }
@@ -453,6 +455,15 @@
 <div class="quiz-overlay" id="quiz-overlay" hidden>
   <div class="quiz-modal" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title">
     <button class="quiz-close" id="quiz-close" aria-label="Close quiz">✕</button>
+
+    <div id="quiz-intro-view" hidden>
+      <h2 class="quiz-title">What's Your SDG?</h2>
+      <p class="quiz-subtitle">Take our 7-question quiz to find out which UN Sustainable Development Goal matches you best.</p>
+      <p class="quiz-disclaimer">Just for fun — this isn't a scientific assessment, so don't take the result too seriously.</p>
+      <div class="quiz-nav quiz-nav-end">
+        <button class="quiz-btn quiz-btn-primary" id="quiz-start" type="button">Start Quiz</button>
+      </div>
+    </div>
 
     <div id="quiz-question-view">
       <div class="quiz-progress" id="quiz-progress" aria-hidden="true"></div>
@@ -899,12 +910,14 @@ function resetQuiz() {
 
 const QUIZ_DISMISS_KEY = 'sdgQuizDismissed';
 
-function openQuizModal() {
+function openQuizModal(showIntro = false) {
   resetQuiz();
+  document.getElementById('quiz-intro-view').hidden = !showIntro;
+  document.getElementById('quiz-question-view').hidden = showIntro;
   const overlay = document.getElementById('quiz-overlay');
   overlay.hidden = false;
   document.body.style.overflow = 'hidden';
-  document.getElementById('quiz-close').focus();
+  document.getElementById(showIntro ? 'quiz-start' : 'quiz-close').focus();
 }
 
 function closeQuizModal() {
@@ -916,7 +929,7 @@ function closeQuizModal() {
 function maybeShowQuizOnFirstVisit() {
   let dismissed = false;
   try { dismissed = localStorage.getItem(QUIZ_DISMISS_KEY) === '1'; } catch (e) { dismissed = false; }
-  if (!dismissed) openQuizModal();
+  if (!dismissed) openQuizModal(true);
 }
 
 function buildSearchText(c) {
@@ -1164,6 +1177,12 @@ document.getElementById('quiz-next').addEventListener('click', goToNextQuizQuest
 document.getElementById('quiz-skip').addEventListener('click', goToNextQuizQuestion);
 document.getElementById('quiz-retake').addEventListener('click', resetQuiz);
 document.getElementById('quiz-expand-toggle').addEventListener('click', toggleQuizFullRanking);
+document.getElementById('quiz-start').addEventListener('click', () => {
+  document.getElementById('quiz-intro-view').hidden = true;
+  document.getElementById('quiz-question-view').hidden = false;
+  const firstOption = document.querySelector('#quiz-option-list .quiz-option');
+  if (firstOption) firstOption.focus();
+});
 
 // ── HEADER HEIGHT (keeps sticky controls bar aligned under the header) ──
 function updateHeaderOffset() {
