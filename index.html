@@ -66,6 +66,22 @@
   .tabs-wrap .result-count { font-size: 0.8rem; color: var(--text-light); white-space: nowrap; margin-left: auto; }
   .result-count strong { color: var(--green-dark); }
 
+  /* ── QUIZ CALLOUT ── */
+  .tabs { position: relative; }
+  .quiz-callout {
+    position: absolute; bottom: calc(100% + 10px); right: 0; z-index: 95;
+    background: var(--green-dark); color: white; font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 600; padding: 8px 14px; border-radius: 8px;
+    white-space: nowrap; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    opacity: 0; transform: translateY(4px); transition: opacity 0.2s, transform 0.2s;
+  }
+  .quiz-callout.visible { opacity: 1; transform: translateY(0); }
+  .quiz-callout-arrow {
+    position: absolute; top: 100%; right: 20px; width: 0; height: 0;
+    border-left: 6px solid transparent; border-right: 6px solid transparent;
+    border-top: 6px solid var(--green-dark);
+  }
+
   /* ── CONTROLS ── */
   .controls-wrap { background: var(--off-white); border-bottom: 1px solid var(--card-border); position: sticky; top: var(--header-h, 70px); z-index: 90; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
   .controls { max-width: 1200px; margin: 0 auto; padding: 14px 32px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -86,6 +102,9 @@
     background: none; border: none; padding: 0 0 8px; cursor: pointer; text-align: left;
   }
   .sdg-filter-heading:focus-visible { outline: 2px solid var(--green-mid); outline-offset: 3px; }
+  .sdg-filter-learn-more { text-transform: none; letter-spacing: normal; font-weight: 500; }
+  .sdg-filter-learn-more a { color: var(--green-dark); text-decoration: none; }
+  .sdg-filter-learn-more a:hover { text-decoration: underline; }
   .sdg-filter-caret { color: var(--green-mid); font-size: 0.9em; transition: transform 0.18s; flex-shrink: 0; }
   .sdg-filter-wrap.collapsed .sdg-filter-caret { transform: rotate(-90deg); }
   .sdg-filter-wrap.collapsed .sdg-filter-body { display: none; }
@@ -375,7 +394,11 @@
       <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-panel" data-level="Undergraduate" id="tab-ug">Undergraduate</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-panel" data-level="Graduate" id="tab-grad">Graduate</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="reclass-view" data-level="__reclass" id="tab-reclass">New Course or Reclassification?</button>
-      <button class="tab-btn" type="button" aria-haspopup="dialog" data-level="__quiz" id="tab-quiz">Retake SDG Quiz</button>
+      <button class="tab-btn" type="button" aria-haspopup="dialog" data-level="__quiz" id="tab-quiz">SDG Quiz</button>
+      <div class="quiz-callout" id="quiz-callout" role="status">
+        Which SDG are you?
+        <span class="quiz-callout-arrow" aria-hidden="true"></span>
+      </div>
     </div>
     <div class="result-count" aria-live="polite" aria-atomic="true"><strong id="count">0</strong> courses</div>
   </div>
@@ -417,7 +440,7 @@
       <div class="sdg-filter-wrap" id="sdg-filter-wrap" aria-label="Filter by Sustainable Development Goal">
         <button class="sdg-filter-heading" id="sdg-filter-toggle" aria-expanded="true" aria-controls="sdg-filter-body">
           <span class="sdg-filter-caret" aria-hidden="true">▾</span>
-          <span class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal</span>
+          <span class="sdg-filter-label" id="sdg-label">Filter by UN Sustainable Development Goal <span class="sdg-filter-learn-more">(<a href="https://sdgs.un.org/goals" target="_blank" rel="noopener noreferrer" id="sdg-learn-more-link"><strong>learn more here</strong></a>)</span></span>
           <span class="sdg-active-count" id="sdg-active-count" aria-hidden="true"></span>
         </button>
         <div class="sdg-filter-body" id="sdg-filter-body">
@@ -524,7 +547,7 @@ const SDG_DARK_TEXT = new Set([7, 11, 12]);
 // 7 questions (six with 5 options, one with 4) = 34 answer slots = exactly
 // 2 appearances per SDG (34 / 17). No SDG repeats within a single question.
 const QUIZ_QUESTIONS = [
-  { prompt: "You just got an unexpected $500. What's the first thing you do?", options: [
+  { prompt: "You just got an unexpected $50,000. What's the first thing you do?", options: [
     { text: "Cover strangers' grocery bills when they come up short at checkout", sdg: 1 },
     { text: "Go shopping at a local small business", sdg: 8 },
     { text: "Sponsor a local trail or park cleanup", sdg: 15 },
@@ -908,8 +931,6 @@ function resetQuiz() {
   renderQuizOptions();
 }
 
-const QUIZ_DISMISS_KEY = 'sdgQuizDismissed';
-
 function openQuizModal(showIntro = false) {
   resetQuiz();
   document.getElementById('quiz-intro-view').hidden = !showIntro;
@@ -923,13 +944,20 @@ function openQuizModal(showIntro = false) {
 function closeQuizModal() {
   document.getElementById('quiz-overlay').hidden = true;
   document.body.style.overflow = '';
-  try { localStorage.setItem(QUIZ_DISMISS_KEY, '1'); } catch (e) { /* storage unavailable */ }
 }
 
-function maybeShowQuizOnFirstVisit() {
-  let dismissed = false;
-  try { dismissed = localStorage.getItem(QUIZ_DISMISS_KEY) === '1'; } catch (e) { dismissed = false; }
-  if (!dismissed) openQuizModal(true);
+function maybeShowQuizCallout() {
+  const callout = document.getElementById('quiz-callout');
+  if (!callout) return;
+  callout.classList.add('visible');
+
+  const dismiss = () => {
+    callout.classList.remove('visible');
+    window.removeEventListener('scroll', dismiss);
+    document.removeEventListener('click', dismiss, true);
+  };
+  window.addEventListener('scroll', dismiss, { passive: true });
+  document.addEventListener('click', dismiss, true);
 }
 
 function buildSearchText(c) {
@@ -1097,7 +1125,7 @@ function escHtml(str) {
 // ── TAB SWITCHING ──
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    if (btn.dataset.level === '__quiz') { openQuizModal(); return; }
+    if (btn.dataset.level === '__quiz') { openQuizModal(true); return; }
     document.querySelectorAll('.tab-btn').forEach(b => {
       b.classList.remove('active');
       b.setAttribute('aria-selected', 'false');
@@ -1164,6 +1192,7 @@ sdgFilterToggle.addEventListener('click', () => {
   const collapsed = sdgFilterWrap.classList.toggle('collapsed');
   sdgFilterToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
 });
+document.getElementById('sdg-learn-more-link').addEventListener('click', (e) => e.stopPropagation());
 
 // ── WIRE QUIZ MODAL ──
 document.getElementById('quiz-close').addEventListener('click', closeQuizModal);
@@ -1196,7 +1225,7 @@ if (headerEl && window.ResizeObserver) new ResizeObserver(updateHeaderOffset).ob
 
 // ── BOOT ──
 loadAll();
-maybeShowQuizOnFirstVisit();
+maybeShowQuizCallout();
 </script>
 </body>
 </html>
